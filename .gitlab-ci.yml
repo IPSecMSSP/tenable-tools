@@ -1,0 +1,24 @@
+---
+# see https://docs.gitlab.com/ce/ci/yaml/README.html for all available options
+# Use MegaLinter for linting]
+include:
+  - project: "ipsec/citemplates"
+    ref: master
+    file: "/linting/megalinter-dotnet.yml"
+
+  - project: "ipsec/citemplates"
+    ref: master
+    file: "/test/pwsh-pester.yml"
+
+stages:
+  - linting
+  - test
+
+megalinter:
+  extends: .megalinter-minimal
+  image:
+    name: nvuillam/mega-linter-dotnet:latest
+    entrypoint: [""]
+
+pester:
+  extends: .pwsh_pester
