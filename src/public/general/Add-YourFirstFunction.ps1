@@ -30,7 +30,7 @@ function Add-YourFirstFunction {
       ValueFromPipeline = $true,
       Position = 0
     )]
-    [string] $param1 = "DefaultValue"
+    [string] $param1 = "Default Value"
     )
 
     Begin {

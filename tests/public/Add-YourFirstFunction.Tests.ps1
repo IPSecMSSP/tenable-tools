@@ -8,9 +8,9 @@ Describe 'Add-YourFirstFunction' {
   Context "When not passed any parameters." {
 
     It 'Should write correct output.' {
-      Add-YourFirstFunction -param1 | Should -Be "Your first function ran!  Supplied Parameter: Default Value"
+      Add-YourFirstFunction | Should -Be "Your first function ran!  Supplied Parameter: Default Value"
     }
 
   }
-  
+
 }

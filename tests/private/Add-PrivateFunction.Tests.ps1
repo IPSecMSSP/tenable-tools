@@ -14,7 +14,7 @@ Describe 'Add-PrivateFunction' {
       }
 
     }
-  
+
   }
-  
+
 }

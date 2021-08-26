@@ -1,5 +1,5 @@
 # Define common module info variables.
-$ModuleName = "FreshService.Tools"
+$ModuleName = "Tenable.Tools"
 $ModuleManifestName = "$ModuleName.psd1"
 $ModuleManifestPath = "$PSScriptRoot\..\src\$ModuleManifestName"
 
