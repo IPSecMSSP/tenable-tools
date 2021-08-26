@@ -1,13 +1,7 @@
 {
   "threshold": 50,
-  "reporters": [
-    "consoleFull"
-  ],
-  "ignore": [
-    "**/__snapshots__/**"
-  ],
-  "exclude": [
-    "**/*.json"
-  ],
+  "reporters": ["consoleFull"],
+  "ignore": ["**/__snapshots__/**"],
+  "exclude": ["**/*.json"],
   "absolute": true
 }

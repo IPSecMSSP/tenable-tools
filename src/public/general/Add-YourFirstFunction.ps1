@@ -31,9 +31,20 @@ function Add-YourFirstFunction {
       Position = 0
     )]
     [string] $param1 = "DefaultValue"
-)
+    )
 
-  # Your function code goes here...
-  Write-Output "Your first function ran!  Supplied Parameter: $param1"
+    Begin {
+
+    }
+
+    Process {
+        # Your function code goes here...
+        Write-Output "Your first function ran!  Supplied Parameter: $param1"
+
+    }
+
+    End {
+
+    }
 
 }

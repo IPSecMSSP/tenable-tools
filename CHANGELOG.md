@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - Insert release date
+## [0.0.1] - Insert release date
 
 ### Added
 
@@ -35,8 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known Issues
 
-- [#1](https://url.to.repo/repo/path/-/issues/1) Documentation is somewhat lacking
+- [#1](https://melsgl01.soc.ipsec.net.au/vendors/tenable/tenable-tools/-/issues/1) Documentation is somewhat lacking
 
-[Unreleased]: https://url.to.repo/repo/path/
-[1.0.0]: https://url.to.repo/repo/path/-/releases/v1.0.0
-
+[Unreleased]: https://melsgl01.soc.ipsec.net.au/vendors/tenable/tenable-tools/
+[0.0.1]: https://melsgl01.soc.ipsec.net.au/vendors/tenable/tenable-tools/-/releases/v0.0.1

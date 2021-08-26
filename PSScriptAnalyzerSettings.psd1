@@ -15,7 +15,7 @@
   Rules        = @{
     # Check if cmdlets are compatible on PowerShell Core
     PSUseCompatibleCmdlets = @{
-      Compatibility = @("core-6.1.0-windows", "core-6.1.0-linux", "core-6.1.0-macos") 
+      Compatibility = @("core-6.1.0-windows", "core-6.1.0-linux", "core-6.1.0-macos")
     }
   }
 }

@@ -5,6 +5,7 @@ PowerShell module for interfacing to the Tenable.io API
 ## Overview
 
 Tenable.Tools provides an interface to the Tenable.io API
+
 ## Getting Started
 
 ### PowerShell Gallery
@@ -57,4 +58,3 @@ Contributions are very welcome and there are many ways to contribute:
 - Participate in issue and pull requests discussion threads, and test fixes or new features.
 - Submit your own fixes or features as a pull request.
   - If your change is substantial, please open an issue for discussion beforehand.
-
