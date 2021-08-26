@@ -15,6 +15,10 @@ if (!(Get-InstalledModule -Name Pester -MinimumVersion '5.2.0' -ErrorAction Sile
 
 Import-Module Pester
 
+$SourceDirectory = "$PSScriptRoot\..\src"
+$Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
+Import-Module $Module
+
 $PesterConf = [PesterConfiguration]::Default
 $PesterConf.TestResult.OutputFormat = 'JUnitXml'
 $PesterConf.TestResult.Enabled = $true

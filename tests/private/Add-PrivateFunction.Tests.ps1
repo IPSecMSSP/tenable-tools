@@ -1,9 +1,10 @@
+BeforeAll {
+  # Setup for Testing
+  $here = Split-Path -Parent $PSCommandPath
+  . $here\..\_InitializeTests.ps1
+}
+
 Describe 'Add-PrivateFunction' {
-  BeforeAll {
-    # Setup for Testing
-    $here = Split-Path -Parent $PSCommandPath
-    . $here\..\_InitializeTests.ps1
-  }
 
   InModuleScope Tenable.Tools {
 
