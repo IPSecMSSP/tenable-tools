@@ -1,0 +1,42 @@
+{
+  "categories": [
+    {
+      "uuid": "578aaf6f-9221-4fef-a09b-945f55aa2890",
+      "created_at": "2021-03-22T21:19:59.733Z",
+      "created_by": "team@domain.com",
+      "updated_at": "2021-03-24T03:31:00.527Z",
+      "updated_by": "team@domain.com",
+      "name": "Tag Category 1",
+      "description": "The first tag category",
+      "reserved": false,
+      "value_count": 1
+    },
+    {
+      "uuid": "5511ae9a-f854-49d3-bdb1-57832116ddf8",
+      "created_at": "2020-08-21T10:52:40.92Z",
+      "created_by": "team@domain.com",
+      "updated_at": "2020-08-21T10:52:40.92Z",
+      "updated_by": "team@domain.com",
+      "name": "Tag Category 2",
+      "description": "The Second Tag Category",
+      "reserved": false,
+      "value_count": 0
+    },
+    {
+      "uuid": "e1c0a7e2-7480-451a-91eb-6989f713eca5",
+      "created_at": "2021-03-22T07:57:32.509Z",
+      "created_by": "team@domain.com",
+      "updated_at": "2021-03-24T03:35:49.26Z",
+      "updated_by": "team@domain.com",
+      "name": "Tag Category 3",
+      "description": "The third tag category",
+      "reserved": false,
+      "value_count": 1
+    }
+  ],
+  "pagination": {
+    "offset": 0,
+    "limit": 5000,
+    "total": 3
+  }
+}

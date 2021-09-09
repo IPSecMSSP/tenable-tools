@@ -1,0 +1,11 @@
+{
+  "uuid": "578aaf6f-9221-4fef-a09b-945f55aa2890",
+  "created_at": "2021-03-22T21:19:59.733Z",
+  "created_by": "team@domain.com",
+  "updated_at": "2021-03-24T03:31:00.527Z",
+  "updated_by": "team@domain.com",
+  "name": "Tag Category 1",
+  "description": "The first tag category",
+  "reserved": false,
+  "value_count": 1
+}

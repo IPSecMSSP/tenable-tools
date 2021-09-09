@@ -7,8 +7,10 @@ function Invoke-TioApiRequest {
     This function is intended to be called by other functions for specific resources/interactions
   .PARAMETER Uri
     Base API URL for the API Call
-  .PARAMETER Credential
-    PSCredential Object with the API Key stored in the Password property of the object.
+  .PARAMETER AccessKey
+    PSCredential Object with the Access Key stored in the Password property of the object.
+  .PARAMETER SecretKey
+    PSCredential Object with the Secret Key stored in the Password property of the object.
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Body
@@ -24,7 +26,13 @@ function Invoke-TioApiRequest {
   param(
     [Parameter(Mandatory=$true,
       HelpMessage = 'Full URI to requested resource, including URI parameters')]
-		[string]  $Uri,
+    [ValidateScript({
+      $TypeName = $_ | Get-Member | Select-Object -ExpandProperty TypeName -Unique
+      if ($TypeName -eq 'System.String' -or $TypeName -eq 'System.UriBuilder') {
+        [System.UriBuilder]$_
+      }
+    })]
+		[System.UriBuilder]  $Uri,
 
     [Parameter(Mandatory=$true,
       HelpMessage = 'PSCredential Object containing the Access Key in the Password property')]
@@ -91,7 +99,7 @@ function Invoke-TioApiRequest {
       Write-Verbose "$Me : Body supplied"
 
       try {
-        $Results = Invoke-RestMethod -Method $Method -Uri $Uri -Headers $Header -Body ($Body|ConvertTo-Json -Depth 10) -FollowRelLink -MaximumFollowRelLink $MaxRelLink -ResponseHeadersVariable ResponseHeaders
+        $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -Body ($Body|ConvertTo-Json -Depth 10) -FollowRelLink -MaximumFollowRelLink $MaxRelLink -ResponseHeadersVariable ResponseHeaders
       }
       catch {
         $Exception = $_.Exception
@@ -110,7 +118,7 @@ function Invoke-TioApiRequest {
       # Make the API Call without a body. This is for GET requests, where details of what we want to get is in the URI
       Write-Verbose "$Me : No Body supplied"
       try {
-        $Results = Invoke-RestMethod -Method $Method -Uri $Uri -Headers $Header -FollowRelLink -MaximumFollowRelLink $MaxRelLink -ResponseHeadersVariable ResponseHeaders
+        $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -FollowRelLink -MaximumFollowRelLink $MaxRelLink -ResponseHeadersVariable ResponseHeaders
       }
       catch {
         $Exception = $_.Exception
