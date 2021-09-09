@@ -1,0 +1,43 @@
+{
+  "values": [
+    {
+      "uuid": "1bc82ba0-2b24-48a5-ab7c-40314ddf209c",
+      "created_at": "2020-10-05T03:23:30.247Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-10-05T03:24:16.781Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "578aaf6f-9221-4fef-a09b-945f55aa2890",
+      "value": "Category 1, Value 1",
+      "description": "First Value in Tag Category 1",
+      "type": "dynamic",
+      "category_name": "Tag Category 1",
+      "category_description": "",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    },
+    {
+      "uuid": "8f68a869-1cbc-4544-a252-b253cb1f2aaf",
+      "created_at": "2020-10-05T03:22:50.186Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-10-05T03:23:43.322Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "578aaf6f-9221-4fef-a09b-945f55aa2890",
+      "value": "Category 1, Value 2",
+      "description": "",
+      "type": "static",
+      "category_name": "Tag Category 1",
+      "category_description": "",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    }
+  ],
+  "pagination": {
+    "offset": 0,
+    "limit": 5000,
+    "total": 2
+  }
+}

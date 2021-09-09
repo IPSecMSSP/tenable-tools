@@ -1,0 +1,111 @@
+{
+  "values": [
+    {
+      "uuid": "1bc82ba0-2b24-48a5-ab7c-40314ddf209c",
+      "created_at": "2020-10-05T03:23:30.247Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-10-05T03:24:16.781Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "578aaf6f-9221-4fef-a09b-945f55aa2890",
+      "value": "Category 1, Value 1",
+      "description": "First Value in Tag Category 1",
+      "type": "dynamic",
+      "category_name": "Tag Category 1",
+      "category_description": "",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    },
+    {
+      "uuid": "1cd3159a-e034-4fc1-95a2-a74ff935ee46",
+      "created_at": "2020-09-23T20:48:10.951Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-09-29T04:32:25.292Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "5511ae9a-f854-49d3-bdb1-57832116ddf8",
+      "value": "Category 2, Value 1",
+      "description": "First value in Tag Category 2",
+      "type": "dynamic",
+      "category_name": "Tag Category 2",
+      "category_description": "Tag Category 2 Description",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    },
+    {
+      "uuid": "2311a3d5-0d63-4b3b-8dfe-92096e21b4fc",
+      "created_at": "2020-09-23T20:45:54.93Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-09-29T04:28:36.112Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "5511ae9a-f854-49d3-bdb1-57832116ddf8",
+      "value": "Category 2, Value 2",
+      "description": "Second value in Tag Category 2",
+      "type": "dynamic",
+      "category_name": "Tag Category 2",
+      "category_description": "Tag Category 2 Description",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    },
+    {
+      "uuid": "5d9836cb-681d-4b8c-b00d-0badd5d5116c",
+      "created_at": "2021-03-22T21:19:59.745Z",
+      "created_by": "team@domain.com",
+      "updated_at": "2021-03-24T03:31:00.527Z",
+      "updated_by": "team@domain.com",
+      "category_uuid": "e1c0a7e2-7480-451a-91eb-6989f713eca5",
+      "value": "Category 3, Value 1",
+      "description": "First Value in Category 3",
+      "type": "dynamic",
+      "category_name": "Tag Category 3",
+      "category_description": "",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    },
+    {
+      "uuid": "8f68a869-1cbc-4544-a252-b253cb1f2aaf",
+      "created_at": "2020-10-05T03:22:50.186Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-10-05T03:23:43.322Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "578aaf6f-9221-4fef-a09b-945f55aa2890",
+      "value": "Category 1, Value 2",
+      "description": "",
+      "type": "static",
+      "category_name": "Tag Category 1",
+      "category_description": "",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    },
+    {
+      "uuid": "f9358b31-8206-4218-85bd-6b540ebe726e",
+      "created_at": "2020-09-23T20:49:37.007Z",
+      "created_by": "admin@domain.com",
+      "updated_at": "2020-09-23T21:23:30.627Z",
+      "updated_by": "admin@domain.com",
+      "category_uuid": "5511ae9a-f854-49d3-bdb1-57832116ddf8",
+      "value": "Physical",
+      "description": "Windows Physical Servers",
+      "type": "dynamic",
+      "category_name": "Tag Category 2",
+      "category_description": "Tag Category 2 Description",
+      "access_control": {
+        "current_user_permissions": ["ALL", "CAN_EDIT", "CAN_SET_PERMISSIONS"]
+      },
+      "saved_search": false
+    }
+  ],
+  "pagination": {
+    "offset": 0,
+    "limit": 5000,
+    "total": 6
+  }
+}
