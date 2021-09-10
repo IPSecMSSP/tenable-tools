@@ -24,6 +24,7 @@ $PesterConf.TestResult.OutputFormat = 'JUnitXml'
 $PesterConf.TestResult.Enabled = $true
 $PesterConf.Run.Exit = $true
 $PesterConf.Run.Path = $Path
+$PesterConf.Run.PassThru = $true
 $PesterConf.Output.Verbosity = $Verbosity
 
 Invoke-Pester -Configuration $PesterConf

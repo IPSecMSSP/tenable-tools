@@ -40,9 +40,24 @@ Add-BuildTask Analyze EnsurePSScriptAnalyzer, {
   }
 }
 
+# Task for updating the Module Manifest
+Add-BuildTask Manifest {
+  $SourceDirectory = "$BuildRoot\src"
+  $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
+
+  $PublicFunctions = Get-ChildItem -Path $SourceDirectory -Include 'public' -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
+  $PublicFunctionNames = $PublicFunctions | Select-String -Pattern 'function (\w+-\w+) {' -AllMatches | ForEach-Object { $_.Matches.Groups[1].Value }
+
+  Write-Output "Updating Module Manifest with exportable functions. Adding $($PublicFunctionNames.Count) functions via Update-ModuleManifest"
+  Update-ModuleManifest -FunctionsToExport $PublicFunctionNames -Path $Module.FullName
+
+  # Trim Trailing Spaces
+  (Get-Content $Module.FullName | ForEach-Object { $_.TrimEnd()})| Set-Content $Module.FullName
+}
+
 # Task for running all Pester tests within the project.
-Add-BuildTask Test EnsurePester, {
-  $Results = Invoke-Pester -Path $BuildRoot\tests -PassThru
+Add-BuildTask Test EnsurePester, Manifest, {
+  $Results = & "$BuildRoot\tests\Pester-Tests.ps1"
   Assert-Build($Results.FailedCount -eq 0) ('Failed "{0}" Pester tests.' -f $Results.FailedCount)
 }
 
@@ -87,6 +102,12 @@ Add-BuildTask Compile {
   $PublicFunctionNames = $PublicFunctions | Select-String -Pattern 'function (\w+-\w+) {' -AllMatches | ForEach-Object { $_.Matches.Groups[1].Value }
   Write-Output "Making $($PublicFunctionNames.Count) functions available via Export-ModuleMember"
   "Export-ModuleMember -Function {0}" -f ($PublicFunctionNames -join ', ') | Add-Content $DestinationModule
+
+  Write-Output "Updating Module Manifest with exportable functions. Adding $($PublicFunctionNames.Count) functions via Update-ModuleManifest"
+  Update-ModuleManifest -FunctionsToExport $PublicFunctionNames -Path $Module.FullName
+
+  # Trim Trailing Spaces
+  (Get-Content $Module.FullName | ForEach-Object { $_.TrimEnd()})| Set-Content $Module.FullName
 
   Copy-Item -Path $Module.FullName -Destination $BuildDirectory
 
