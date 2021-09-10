@@ -21,7 +21,7 @@ function Get-TioAsset {
   [CmdletBinding(DefaultParameterSetName='ListAll')]
 
   param(
-    [Parameter(Mandatory=$true,
+    [Parameter(Mandatory=$false,
       HelpMessage = 'Full URI to requested resource, including URI parameters')]
     [ValidateScript({
       $TypeName = $_ | Get-Member | Select-Object -ExpandProperty TypeName -Unique
@@ -29,7 +29,7 @@ function Get-TioAsset {
         [System.UriBuilder]$_
       }
     })]
-		[System.UriBuilder]  $Uri,
+		[System.UriBuilder]  $Uri = 'https://cloud.tenable.com',
 
     [Parameter(Mandatory=$true,
       HelpMessage = 'PSCredential Object containing the Access Key in the Password property')]
