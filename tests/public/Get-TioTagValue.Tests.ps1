@@ -14,7 +14,7 @@ Describe 'Get-TioTagValue' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioTagValue -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey).Count | Should -BeGreaterThan 2
+      (Get-TioTagValue -Uri $TestUri -ApiKeys $ApiKeys).Count | Should -BeGreaterThan 2
     }
 
   }
@@ -27,7 +27,7 @@ Describe 'Get-TioTagValue' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioTagValue -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey -Uuid '1bc82ba0-2b24-48a5-ab7c-40314ddf209c').value | Should -Be "Category 1, Value 1"
+      (Get-TioTagValue -Uri $TestUri -ApiKeys $ApiKeys -Uuid '1bc82ba0-2b24-48a5-ab7c-40314ddf209c').value | Should -Be "Category 1, Value 1"
     }
   }
 
@@ -39,7 +39,7 @@ Describe 'Get-TioTagValue' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioTagValue -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey -CategoryName 'Tag Category 1').Count | Should -BeGreaterThan 1
+      (Get-TioTagValue -Uri $TestUri -ApiKeys $ApiKeys -CategoryName 'Tag Category 1').Count | Should -BeGreaterThan 1
     }
   }
 

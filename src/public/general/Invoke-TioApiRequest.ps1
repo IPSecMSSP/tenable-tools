@@ -7,10 +7,9 @@ function Invoke-TioApiRequest {
     This function is intended to be called by other functions for specific resources/interactions
   .PARAMETER Uri
     Base API URL for the API Call
-  .PARAMETER AccessKey
-    PSCredential Object with the Access Key stored in the Password property of the object.
-  .PARAMETER SecretKey
-    PSCredential Object with the Secret Key stored in the Password property of the object.
+  .PARAMETER ApiKeys
+    PSObject containing PSCredential Objects with AccessKey and SecretKey.
+    Must contain PSCredential Objects named AccessKey and SecretKey with the respective keys stored in the Password property
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Body
@@ -35,12 +34,8 @@ function Invoke-TioApiRequest {
 		[System.UriBuilder]  $Uri,
 
     [Parameter(Mandatory=$true,
-      HelpMessage = 'PSCredential Object containing the Access Key in the Password property')]
-    [PSCredential]  $AccessKey,
-
-    [Parameter(Mandatory=$true,
-      HelpMessage = 'PSCredential Object containing the Secret Key in the Password property')]
-    [PSCredential]  $SecretKey,
+      HelpMessage = 'PSObject containing PSCredential Objects with AccessKey and SecretKey')]
+    [PSObject]  $ApiKeys,
 
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
@@ -66,7 +61,7 @@ function Invoke-TioApiRequest {
     }
 
     $Header = @{}
-    $ApiKey = "accessKey={0}; secretKey={1}" -f $AccessKey.GetNetworkCredential().Password, $SecretKey.GetNetworkCredential().Password
+    $ApiKey = "accessKey={0}; secretKey={1}" -f $ApiKeys.AccessKey.GetNetworkCredential().Password, $ApiKeys.SecretKey.GetNetworkCredential().Password
     $Header.Add('X-ApiKeys', ($ApiKey))
     $Header.Add('Content-Type', 'application/json')
     $Header.Add('Accept', 'application/json')

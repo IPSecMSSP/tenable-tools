@@ -6,10 +6,9 @@ function Get-TioAsset {
     This function returns information about one or more Tenable.io Assets
   .PARAMETER Uri
     Base API URL for the API Call
-  .PARAMETER AccessKey
-    PSCredential Object with the Access Key stored in the Password property of the object.
-  .PARAMETER SecretKey
-    PSCredential Object with the Secret Key stored in the Password property of the object.
+  .PARAMETER ApiKeys
+    PSObject containing PSCredential Objects with AccessKey and SecretKey.
+    Must contain PSCredential Objects named AccessKey and SecretKey with the respective keys stored in the Password property
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Body
@@ -32,12 +31,8 @@ function Get-TioAsset {
 		[System.UriBuilder]  $Uri = 'https://cloud.tenable.com',
 
     [Parameter(Mandatory=$true,
-      HelpMessage = 'PSCredential Object containing the Access Key in the Password property')]
-    [PSCredential]  $AccessKey,
-
-    [Parameter(Mandatory=$true,
-      HelpMessage = 'PSCredential Object containing the Secret Key in the Password property')]
-    [PSCredential]  $SecretKey,
+      HelpMessage = 'PSObject containing PSCredential Objects with AccessKey and SecretKey')]
+    [PSObject]  $ApiKeys,
 
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
@@ -82,7 +77,7 @@ function Get-TioAsset {
     }
 
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $Assets = Invoke-TioApiRequest -Uri $Uri -AccessKey $AccessKey -SecretKey $SecretKey
+    $Assets = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys
 
     if ($PSBoundParameters.ContainsKey('Hostname')) {
       Write-Verbose ('Checking Assets by Hostname: ' + $Hostname)

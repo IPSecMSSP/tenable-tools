@@ -14,7 +14,7 @@ Describe 'Get-TioTagCategory' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioTagCategory -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey).Count | Should -BeGreaterThan 2
+      (Get-TioTagCategory -Uri $TestUri -ApiKeys $ApiKeys).Count | Should -BeGreaterThan 2
     }
 
   }
@@ -27,7 +27,7 @@ Describe 'Get-TioTagCategory' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioTagCategory -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey -Uuid '578aaf6f-9221-4fef-a09b-945f55aa2890').Name | Should -Be "Tag Category 1"
+      (Get-TioTagCategory -Uri $TestUri -ApiKeys $ApiKeys -Uuid '578aaf6f-9221-4fef-a09b-945f55aa2890').Name | Should -Be "Tag Category 1"
     }
   }
 
@@ -39,7 +39,7 @@ Describe 'Get-TioTagCategory' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioTagCategory -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey -Name 'Tag Category 1').uuid | Should -Be "578aaf6f-9221-4fef-a09b-945f55aa2890"
+      (Get-TioTagCategory -Uri $TestUri -ApiKeys $ApiKeys -Name 'Tag Category 1').uuid | Should -Be "578aaf6f-9221-4fef-a09b-945f55aa2890"
     }
   }
 

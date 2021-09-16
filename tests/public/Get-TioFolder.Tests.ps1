@@ -14,7 +14,7 @@ Describe 'Get-TioFolder' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioFolder -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey).Count | Should -BeGreaterThan 2
+      (Get-TioFolder -Uri $TestUri -ApiKeys $ApiKeys).Count | Should -BeGreaterThan 2
     }
 
   }
@@ -27,7 +27,7 @@ Describe 'Get-TioFolder' {
       Mock -ModuleName Tenable.Tools Invoke-TioApiRequest {
         return Get-Content $TestDataFile | ConvertFrom-Json -depth 10
       }
-      (Get-TioFolder -Uri $TestUri -AccessKey $AccessKey -SecretKey $SecretKey -Name 'My Scans').type | Should -Be "main"
+      (Get-TioFolder -Uri $TestUri -ApiKeys $ApiKeys -Name 'My Scans').type | Should -Be "main"
     }
   }
 

@@ -6,10 +6,9 @@ function Get-TioExportAsset {
     This function returns information about one or more Tenable.io Assets
   .PARAMETER Uri
     Base API URL for the API Call
-  .PARAMETER AccessKey
-    PSCredential Object with the Access Key stored in the Password property of the object.
-  .PARAMETER SecretKey
-    PSCredential Object with the Secret Key stored in the Password property of the object.
+  .PARAMETER ApiKeys
+    PSObject containing PSCredential Objects with AccessKey and SecretKey.
+    Must contain PSCredential Objects named AccessKey and SecretKey with the respective keys stored in the Password property
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Filter
@@ -33,12 +32,8 @@ function Get-TioExportAsset {
 		[System.UriBuilder]  $Uri = 'https://cloud.tenable.com',
 
     [Parameter(Mandatory=$true,
-      HelpMessage = 'PSCredential Object containing the Access Key in the Password property')]
-    [PSCredential]  $AccessKey,
-
-    [Parameter(Mandatory=$true,
-      HelpMessage = 'PSCredential Object containing the Secret Key in the Password property')]
-    [PSCredential]  $SecretKey,
+      HelpMessage = 'PSObject containing PSCredential Objects with AccessKey and SecretKey')]
+    [PSObject]  $ApiKeys,
 
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
@@ -87,11 +82,11 @@ function Get-TioExportAsset {
   Process {
     # Initiate the Asset Export
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $AssetExport = Invoke-TioApiRequest -Uri $Uri -AccessKey $AccessKey -SecretKey $SecretKey -Method $Method -Body $Body -Debug
+    $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body -Debug
 
     Write-Verbose ($Me + ': Asset Export ID: ' + $AssetExport.export_uuid)
     # Start by checking the status
-    $ExportStatus = Get-TioExportAssetStatus -AccessKey $AccessKey -SecretKey $SecretKey -Uuid $AssetExport.export_uuid
+    $ExportStatus = Get-TioExportAssetStatus -ApiKeys $ApiKeys -Uuid $AssetExport.export_uuid
 
     if ($ExportStatus.Error) {
       Write-Error ("$Me : Exception: $($ExportStatus.Code) : $($ExportStatus.Note)")
@@ -103,7 +98,7 @@ function Get-TioExportAsset {
     while ($ExportStatus.status -ne 'FINISHED') {
       Start-Sleep -Seconds $RetryInterval
 
-      $ExportStatus = Get-TioExportAssetStatus -AccessKey $AccessKey -SecretKey $SecretKey -Uuid $AssetExport.export_uuid
+      $ExportStatus = Get-TioExportAssetStatus -ApiKeys $ApiKeys -Uuid $AssetExport.export_uuid
 
       # Check for failures
       if ($ExportStatus.status -eq 'CANCELLED' -or $ExportStatus.status -eq 'ERROR') {
@@ -119,7 +114,7 @@ function Get-TioExportAsset {
     $Assets = @()
 
     foreach ($Chunk in $ExportStatus.chunks_available) {
-      $Assets += Get-TioExportAssetChunk -AccessKey $AccessKey -SecretKey $SecretKey -Uuid $AssetExport.export_uuid -Chunk $Chunk
+      $Assets += Get-TioExportAssetChunk -ApiKeys $ApiKeys -Uuid $AssetExport.export_uuid -Chunk $Chunk
     }
 
     Write-Output $Assets
