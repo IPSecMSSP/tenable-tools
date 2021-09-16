@@ -1,9 +1,9 @@
-function Get-TioAsset {
+function Get-TioFolder {
   <#
   .SYNOPSIS
-    Get Tag Category information
+    Lists both Tenable-provided folders and the current user's custom folders.
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Assets
+    This function returns information about one or more Tenable.io Folders
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER AccessKey
@@ -12,8 +12,6 @@ function Get-TioAsset {
     PSCredential Object with the Secret Key stored in the Password property of the object.
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
-  .PARAMETER Body
-    PSCustomObject containing data to be sent as HTTP Request Body in JSON format.
   .OUTPUTS
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
@@ -44,71 +42,62 @@ function Get-TioAsset {
     [ValidateSet("Post","Get","Put","Delete")]
     [string] $Method = "GET",
 
-    [Parameter(Mandatory=$false,
-      ParameterSetName = 'ById',
+    [Parameter(Mandatory=$true,
+      ParameterSetName = 'ByName',
       ValueFromPipeline = $true,
       ValueFromPipelineByPropertyName = $true,
-      HelpMessage = 'Id (UUID) of Asset for which to retrieve details')]
-    [Alias("Id")]
-    [string] $Uuid,
+      HelpMessage = 'Name of folder for which to retrieve details')]
+    [string] $Name,
 
-    [Parameter(Mandatory=$false,
-      ParameterSetName = 'ByHostname',
-      ValueFromPipeline = $true,
-      ValueFromPipelineByPropertyName = $true,
-      HelpMessage = 'Hostname for which to retrieve details')]
-    [string] $Hostname,
-
-    [Parameter(Mandatory=$false,
-      ParameterSetName = 'ByIpv4',
-      ValueFromPipeline = $true,
-      ValueFromPipelineByPropertyName = $true,
-      HelpMessage = 'IPv4 for which to retrieve details')]
-    [string] $IPv4
-  )
+    [Parameter(Mandatory=$true,
+      ParameterSetName = 'ByType',
+      HelpMessage = 'Type of folder for which to retrieve details')]
+    [ValidateSet('main', 'trash', 'custom')]
+    [string] $Type
+	)
 
   Begin {
     $Me = $MyInvocation.MyCommand.Name
 
     Write-Verbose $Me
 
-    $Uri.Path = [io.path]::combine($Uri.Path, "assets")
+    $Uri.Path = [io.path]::combine($Uri.Path, "folders")
+
   }
 
   Process {
-    if ($PSBoundParameters.ContainsKey('Uuid')) {
-      # We're looking up a specific Id
-      $Uri.Path = [io.path]::combine($Uri.Path, $Uuid)
-    }
-
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $Assets = Invoke-TioApiRequest -Uri $Uri -AccessKey $AccessKey -SecretKey $SecretKey
+    $Folders = Invoke-TioApiRequest -Uri $Uri -AccessKey $AccessKey -SecretKey $SecretKey
 
-    if ($PSBoundParameters.ContainsKey('Hostname')) {
-      Write-Verbose ('Checking Assets by Hostname: ' + $Hostname)
-      # We're looking up a specific Hostname
-      foreach ($Asset in $Assets.assets) {
+    Write-Debug ($Folders | ConvertTo-Json -depth 10)
+
+    if ($PSBoundParameters.ContainsKey('Name')) {
+      Write-Verbose ('Checking Folders by Name: ' + $Name)
+      # We're looking up a specific Name
+      foreach ($Folder in $Folders.folders) {
         Write-Verbose ('  Checking: ' + $Folder.name)
-        if ($asset.hostname -eq $Hostname) {
-          Write-Output $Asset
+        if ($Folder.name -eq $Name) {
+          Write-Output $Folder
         }
       }
-    } elseif ($PSBoundParameters.ContainsKey('IPv4')) {
-      Write-Verbose ('Checking Folders by Type: ' + $IPv4)
+    } elseif ($PSBoundParameters.ContainsKey('Type')) {
+      Write-Verbose ('Checking Folders by Type: ' + $Type)
       # We're looking up a specific Type
-      foreach ($Asset in $Assets.assets) {
-        Write-Verbose ('  Checking: ' + $Asset.ipv4)
-        if ($Asset.ipv4 -eq $Ipv4) {
-          Write-Output $Asset
+      foreach ($Folder in $Folders.folders) {
+        Write-Verbose ('  Checking: ' + $Folder.type)
+        if ($Folder.type -eq $Type) {
+          Write-Output $Folder
         }
       }
     } else {
-      if ($Assets.assets) {
-        Write-Output $Assets.assets
+      if ($Folders.folders) {
+        Write-Output $Folders.folders
       } else {
-        Write-Output $Assets
+        Write-Output $Folders
       }
     }
+
+
   }
 
   End {

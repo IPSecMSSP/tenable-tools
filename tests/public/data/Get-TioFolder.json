@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "unread_count": 3,
+      "custom": 0,
+      "default_tag": 0,
+      "type": "trash",
+      "name": "Trash",
+      "id": 4
+    },
+    {
+      "unread_count": 3,
+      "custom": 0,
+      "default_tag": 1,
+      "type": "main",
+      "name": "My Scans",
+      "id": 5
+    },
+    {
+      "unread_count": 0,
+      "custom": 1,
+      "default_tag": 0,
+      "type": "custom",
+      "name": "My Custom Folder",
+      "id": 50
+    }
+  ]
+}

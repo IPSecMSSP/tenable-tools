@@ -1,2 +1,3 @@
 build/
-testResults.xml
+/testResults.xml
+config/

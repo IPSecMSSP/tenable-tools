@@ -45,7 +45,7 @@ Add-BuildTask Manifest {
   $SourceDirectory = "$BuildRoot\src"
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
 
-  $PublicFunctions = Get-ChildItem -Path $SourceDirectory -Include 'public' -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
+  $PublicFunctions = Get-ChildItem -Path ($SourceDirectory + '/public') -Recurse -Directory | Get-ChildItem -Include *.ps1 -File
   $PublicFunctionNames = $PublicFunctions | Select-String -Pattern 'function (\w+-\w+) {' -AllMatches | ForEach-Object { $_.Matches.Groups[1].Value }
 
   Write-Output "Updating Module Manifest with exportable functions. Adding $($PublicFunctionNames.Count) functions via Update-ModuleManifest"
