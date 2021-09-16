@@ -1,7 +1,7 @@
 function Get-TioAsset {
   <#
   .SYNOPSIS
-    Get Tag Category information
+    Get Asset information
   .DESCRIPTION
     This function returns information about one or more Tenable.io Assets
   .PARAMETER Uri

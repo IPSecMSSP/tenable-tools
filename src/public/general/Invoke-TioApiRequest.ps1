@@ -2,7 +2,7 @@
 function Invoke-TioApiRequest {
   <#
   .SYNOPSIS
-    Invoke the FreshService API
+    Invoke the Tenable.io API
   .DESCRIPTION
     This function is intended to be called by other functions for specific resources/interactions
   .PARAMETER Uri
@@ -67,15 +67,10 @@ function Invoke-TioApiRequest {
 
     $Header = @{}
     $ApiKey = "accessKey={0}; secretKey={1}" -f $AccessKey.GetNetworkCredential().Password, $SecretKey.GetNetworkCredential().Password
-    #$Creds = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $ApiKey,$null)))
     $Header.Add('X-ApiKeys', ($ApiKey))
     $Header.Add('Content-Type', 'application/json')
     $Header.Add('Accept', 'application/json')
 
-    $MaxRelLink = 10
-    $RateLimitInterval = 60
-
-    $OldRelLink = ''
   }
 
   Process {
@@ -97,18 +92,19 @@ function Invoke-TioApiRequest {
     if ($Body) {
       # Make the API Call, using the supplied Body. Contents of $Body are the responsibility of the calling code.
       Write-Verbose "$Me : Body supplied"
+      Write-Debug ("$Me : Body : " + ($Body | ConvertTo-Json -Depth 10 -Compress))
 
       try {
-        $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -Body ($Body|ConvertTo-Json -Depth 10) -FollowRelLink -MaximumFollowRelLink $MaxRelLink -ResponseHeadersVariable ResponseHeaders
+        $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -Body ($Body|ConvertTo-Json -Depth 10) -ResponseHeadersVariable ResponseHeaders
       }
       catch {
         $Exception = $_.Exception
-        Write-Verbose "$Me : Exception : $($Exception.StatusCode)"
+        Write-Verbose "$Me : Exception : $($Exception.Response.StatusCode.value__) : $($Exception.Message)"
         $ErrorObject.Error = $true
-        $ErrorObject.Code = $Exception.StatusCode
+        $ErrorObject.Code = $Exception.Response.StatusCode.value__
         $ErrorObject.Note = $Exception.Message
         $ErrorObject.Raw = $Exception
-        Write-Debug ($ErrorObject | ConvertTo-Json -Depth 2)
+        Write-Debug ($ErrorObject | ConvertTo-Json -Depth 10)
 
         return $ErrorObject
       }
@@ -118,7 +114,7 @@ function Invoke-TioApiRequest {
       # Make the API Call without a body. This is for GET requests, where details of what we want to get is in the URI
       Write-Verbose "$Me : No Body supplied"
       try {
-        $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -FollowRelLink -MaximumFollowRelLink $MaxRelLink -ResponseHeadersVariable ResponseHeaders
+        $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -ResponseHeadersVariable ResponseHeaders
       }
       catch {
         $Exception = $_.Exception
@@ -137,44 +133,6 @@ function Invoke-TioApiRequest {
     Write-Verbose ($ResponseHeaders | ConvertTo-Json -Depth 5)
 
     Write-Output $Results
-
-    # Check if we have a link to a next page
-    if (($ResponseHeaders.ContainsKey('Link')) -and ($null -ne $ResponseHeaders.Link) -and ('' -ne $ResponseHeaders.Link)) {
-      $Depth += 1
-      Write-Verbose "Next Link: $($ResponseHeaders.Link) at Depth: $Depth"
-      # Extract the URL from the link text which looks like '<https::domain.freshservice.com/api/v2/tickets?per_page=100&page=21>; Rel="next"'
-      $RelLink = [regex]::match($ResponseHeaders.Link,'\<([^\>]+)\>.*').Groups[1].Value
-
-      # If the link has not changed, don't follow it
-      if ($RelLink -ne $OldRelLink) {
-        # Check Rate Limiting
-        $RateLimitMax = $ResponseHeaders.'X-RateLimit-Total'
-        $RateLimitRemaining = $ResponseHeaders.'X-RateLimit-Remaining'
-        $RateLimitUsedCurrentRequest = $ResponseHeaders.'X-RateLimit-Used-CurrentRequest'
-        Write-Verbose "RateLimitMax: $RateLimitMax; RateLimitRemaining: $RateLimitRemaining; RateLimitUsedCurrentRequest: $RateLimitUsedCurrentRequest"
-
-        if (($RateLimitUsedCurrentRequest * $MaxRelLink) -ge $RateLimitRemaining) {
-          # Nearing Rate Limit
-          Write-Verbose "Sleeping to evade API Rate Limit"
-          Start-Sleep -Seconds $RateLimitInterval
-        }
-
-        Write-Verbose "Requesting Next set of results from $RelLink"
-        # Make a nested call to myself to get the next batch of results within API limits
-        # Since you cannot have multiple pages of results for "Creating" resources, a $Body is never required here
-        $Results = Invoke-TioApiRequest -Uri $RelLink -Credential $Credential -Method $Method -Depth $Depth
-
-        Write-Output $Results
-
-        if ($Results -is [HashTable] -and $Results.ContainsKey('Error') -and $Results.Error) {
-          Write-Debug ($Results | ConvertTo-Json)
-          Throw "$Me : Encountered error getting additional results.  $($ErrorObject.Code) : $($ErrorObject.Note) from: $RelLink"
-        } else {
-          Write-Output $Results
-        }
-        $OldRelLink = $RelLink
-      }
-    }
   }
 
   End {

@@ -69,8 +69,10 @@ PowerShellVersion = '5.1'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-TioAsset', 'Get-TioFolder', 'Add-YourFirstFunction',
-               'Invoke-TioApiRequest', 'Get-TioTagCategory', 'Get-TioTagValue'
+FunctionsToExport = 'Get-TioAsset', 'Get-TioExportAsset', 'Get-TioExportAssetChunk',
+               'Get-TioExportAssetStatus', 'Stop-TioExportAsset', 'Get-TioFolder',
+               'Add-YourFirstFunction', 'Invoke-TioApiRequest', 'Get-TioTagCategory',
+               'Get-TioTagValue'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
