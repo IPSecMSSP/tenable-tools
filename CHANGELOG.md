@@ -7,31 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.1] - Insert release date
+## [0.0.1] - 2021-09-17
+
+Initial release of Tenable.Tools
 
 ### Added
 
-- Initial release of Tenable.Tools
-
-### Changed
-
-- Nothing
-
-### Deprecated
-
-- Nothing
-
-### Removed
-
-- Nothing
-
-### Fixed
-
-- Nothing
-
-### Security
-
-- Nothing
+- Invoke-TioApiRequest
+- Get-TioTagCategory
+- Get-TioTagValue
+- Get-TioAsset
+- Get-TioFolder
+- Get-TioExportAsset
+- Get-TioExportAssetStatus
+- Get-TioExportAssetChunk
+- Stop-TioExportAsset
 
 ### Known Issues
 
