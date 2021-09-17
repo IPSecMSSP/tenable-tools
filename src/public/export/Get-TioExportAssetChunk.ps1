@@ -20,7 +20,7 @@ function Get-TioExportAssetChunk {
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ListAll')]
+  [CmdletBinding(DefaultParameterSetName='ById')]
 
   param(
     [Parameter(Mandatory=$false,

@@ -1,0 +1,22 @@
+{
+  "exports": [
+    {
+      "uuid": "4f375b82-fa19-415d-9dfc-abc9fdadf025",
+      "status": "FINISHED",
+      "total_chunks": 1,
+      "filters": "{\"tag.Windows Production Server\":\"Physical\"}",
+      "finished_chunks": 1,
+      "num_assets_per_chunk": 1000,
+      "created": 1631847707768
+    },
+    {
+      "uuid": "9a3c2986-1000-485e-8c52-e525797fe4c8",
+      "status": "FINISHED",
+      "total_chunks": 1,
+      "filters": "{\"tag.Category 1\":\"Value 1\"}",
+      "finished_chunks": 1,
+      "num_assets_per_chunk": 1000,
+      "created": 1631847426722
+    }
+  ]
+}

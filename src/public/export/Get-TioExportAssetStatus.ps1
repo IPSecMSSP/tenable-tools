@@ -60,7 +60,11 @@ function Get-TioExportAssetStatus {
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
     $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
 
-    Write-Output $ExportStatus
+    if ($ExportStatus.exports) {
+      Write-Output $ExportStatus.exports
+    } else {
+      Write-Output $ExportStatus
+    }
 
   }
 

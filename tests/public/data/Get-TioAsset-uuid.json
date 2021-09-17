@@ -1,0 +1,136 @@
+{
+  "id": "43542fe7-2a38-4fc6-bf7f-923b7d24c91f",
+  "has_agent": false,
+  "created_at": "2020-09-02T21:28:07.69Z",
+  "updated_at": "2021-09-14T23:37:39.446Z",
+  "first_seen": "2020-09-02T21:24:44.516Z",
+  "last_seen": "2021-09-14T23:36:13.731Z",
+  "last_scan_target": "192.168.10.10",
+  "last_authenticated_scan_date": "2021-09-14T23:36:13.731Z",
+  "last_licensed_scan_date": "2021-09-14T23:36:13.731Z",
+  "last_scan_id": "9a20329a-5c50-4204-8cae-5b35cb31c256",
+  "last_schedule_id": "template-3356eeaf-4db9-ff3f-aba5-2a8389b6a70c9788501811d6e056",
+  "sources": [
+    {
+      "name": "NESSUS_SCAN",
+      "first_seen": "2020-09-02T21:24:44.516Z",
+      "last_seen": "2021-09-14T23:36:13.731Z"
+    }
+  ],
+  "tags": [
+    {
+      "tag_uuid": "d64191d3-3748-42f0-b742-8fbbc6646b2b",
+      "tag_key": "Windows OS - Servers",
+      "tag_value": "Windows Server 2016",
+      "added_by": "58d31fc5-4158-418d-b199-9809cd0833eb",
+      "added_at": "2021-03-29T05:36:54.05Z"
+    },
+    {
+      "tag_uuid": "2311a3d5-0d63-4b3b-8dfe-92096e21b4fc",
+      "tag_key": "Windows Production Server",
+      "tag_value": "Site A Virtual",
+      "added_by": "494d456e-0752-4b5d-b256-8ee08a1d14ba",
+      "added_at": "2020-09-23T20:50:59.498Z"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "3",
+      "aliased": false,
+      "fqdn": [
+        "hostname.domain.com"
+      ],
+      "mac_address": [
+        "00:12:34:56:78:9a"
+      ],
+      "ipv4": [
+        "192.168.10.10"
+      ],
+      "ipv6": []
+    },
+    {
+      "name": "UNKNOWN",
+      "fqdn": [
+        "hostname.domain.com"
+      ],
+      "mac_address": [
+        "00:12:34:56:78:9a"
+      ],
+      "ipv4": [
+        "192.168.10.10"
+      ],
+      "ipv6": []
+    }
+  ],
+  "network_id": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "ipv4": [
+    "192.168.10.10"
+  ],
+  "ipv6": [],
+  "fqdn": [
+    "hostname.domain.com"
+  ],
+  "mac_address": [
+    "00:12:34:56:78:9a"
+  ],
+  "netbios_name": [
+    "HOSTNAME"
+  ],
+  "operating_system": [
+    "Microsoft Windows Server 2016 Standard"
+  ],
+  "system_type": [
+    "general-purpose"
+  ],
+  "tenable_uuid": [
+    "53ede5d70fe3464081846851a2cb372e"
+  ],
+  "hostname": [
+    "hostname"
+  ],
+  "agent_name": [],
+  "bios_uuid": [
+    "e5d90942-7372-7fb3-379d-987bb59c9ef9"
+  ],
+  "aws_ec2_instance_id": [],
+  "aws_ec2_instance_ami_id": [],
+  "aws_owner_id": [],
+  "aws_availability_zone": [],
+  "aws_region": [],
+  "aws_vpc_id": [],
+  "aws_ec2_instance_group_name": [],
+  "aws_ec2_instance_state_name": [],
+  "aws_ec2_instance_type": [],
+  "aws_subnet_id": [],
+  "aws_ec2_product_code": [],
+  "aws_ec2_name": [],
+  "azure_vm_id": [],
+  "azure_resource_id": [],
+  "gcp_project_id": [],
+  "gcp_zone": [],
+  "gcp_instance_id": [],
+  "ssh_fingerprint": [],
+  "mcafee_epo_guid": [],
+  "mcafee_epo_agent_guid": [],
+  "qualys_asset_id": [],
+  "qualys_host_id": [],
+  "servicenow_sysid": [],
+  "installed_software": [
+    "cpe:/a:microsoft:.net_framework:2.0.50727",
+    "cpe:/a:microsoft:.net_framework:3.0",
+    "cpe:/a:microsoft:.net_framework:3.5",
+    "cpe:/a:microsoft:.net_framework:4.7.2",
+    "cpe:/a:microsoft:remote_desktop_connection:10.0.14393.4169",
+    "cpe:/a:microsoft:system_center_endpoint_protection:4.10.0209.0",
+    "cpe:/a:microsoft:ie:11.4350.14393.0",
+    "cpe:/a:microsoft:windows_defender:4.18.2107.4",
+    "cpe:/a:google:chrome:92.0.4515.159",
+    "cpe:/a:google:chrome:93.0.4577.63"
+  ],
+  "bigfix_asset_id": [],
+  "security_protection_level": null,
+  "security_protections": [],
+  "exposure_confidence_value": null
+}

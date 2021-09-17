@@ -18,7 +18,7 @@ function Get-TioExportAsset {
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ListAll')]
+  [CmdletBinding(DefaultParameterSetName='ByTag')]
 
   param(
     [Parameter(Mandatory=$false,
@@ -41,10 +41,10 @@ function Get-TioExportAsset {
     [string] $Method = "POST",
 
     [Parameter(Mandatory=$false,
-      HelpMessage = 'Filter condition')]
-    [string] $ChunkSize = 1000,
+      HelpMessage = 'Results per chunk')]
+    [int64] $ChunkSize = 1000,
 
-    [Parameter(Mandatory=$false,
+    [Parameter(Mandatory=$true,
       ParameterSetName = 'ByFilter',
       HelpMessage = 'Filter condition')]
     [string] $Filter,
@@ -57,7 +57,12 @@ function Get-TioExportAsset {
     [Parameter(Mandatory=$true,
       ParameterSetName = 'ByTag',
       HelpMessage = 'Tag Value Filter condition')]
-    [string] $TagValue
+    [string] $TagValue,
+
+    [Parameter(Mandatory=$true,
+      ParameterSetName = 'ByUuid',
+      HelpMessage = 'Tag Value Filter condition')]
+    [string] $Uuid
   )
 
   Begin {
@@ -69,24 +74,34 @@ function Get-TioExportAsset {
 
     $Uri.Path = [io.path]::combine($Uri.Path, "assets/export")
 
-    $Body = @{}
-    $Body.Add('chunk_size',$ChunkSize)
+    if (!$PSBoundParameters.ContainsKey('Uuid')) {
+      # Starting a new search
+      $Body = @{}
+      $Body.Add('chunk_size',$ChunkSize)
 
-    if ($PSBoundParameters.ContainsKey('TagCategory')) {
-      $Body.Add('filters',@{})
-      $Body.filters.add(('tag.' + $TagCategory),$TagValue)
+      if ($PSBoundParameters.ContainsKey('TagCategory')) {
+        $Body.Add('filters',@{})
+        $Body.filters.add(('tag.' + $TagCategory),$TagValue)
+      } elseif ($PSBoundParameters.ContainsKey('Filter')) {
+        $Body.Add('filters',$Filter)
+      }
     }
 
   }
 
   Process {
-    # Initiate the Asset Export
-    Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body -Debug
 
-    Write-Verbose ($Me + ': Asset Export ID: ' + $AssetExport.export_uuid)
+    if (!$PSBoundParameters.ContainsKey('Uuid')) {
+      # Initiate the Asset Export
+      Write-Verbose "$Me : Uri : $($Uri.Uri)"
+      $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+
+      $Uuid = $AssetExport.export_uuid
+    }
+
+    Write-Verbose ($Me + ': Asset Export ID: ' + $Uuid)
     # Start by checking the status
-    $ExportStatus = Get-TioExportAssetStatus -ApiKeys $ApiKeys -Uuid $AssetExport.export_uuid
+    $ExportStatus = Get-TioExportAssetStatus -ApiKeys $ApiKeys -Uuid $Uuid
 
     if ($ExportStatus.Error) {
       Write-Error ("$Me : Exception: $($ExportStatus.Code) : $($ExportStatus.Note)")
@@ -98,7 +113,7 @@ function Get-TioExportAsset {
     while ($ExportStatus.status -ne 'FINISHED') {
       Start-Sleep -Seconds $RetryInterval
 
-      $ExportStatus = Get-TioExportAssetStatus -ApiKeys $ApiKeys -Uuid $AssetExport.export_uuid
+      $ExportStatus = Get-TioExportAssetStatus -ApiKeys $ApiKeys -Uuid $Uuid
 
       # Check for failures
       if ($ExportStatus.status -eq 'CANCELLED' -or $ExportStatus.status -eq 'ERROR') {
@@ -114,7 +129,7 @@ function Get-TioExportAsset {
     $Assets = @()
 
     foreach ($Chunk in $ExportStatus.chunks_available) {
-      $Assets += Get-TioExportAssetChunk -ApiKeys $ApiKeys -Uuid $AssetExport.export_uuid -Chunk $Chunk
+      $Assets += Get-TioExportAssetChunk -ApiKeys $ApiKeys -Uuid $Uuid -Chunk $Chunk
     }
 
     Write-Output $Assets

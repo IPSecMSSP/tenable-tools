@@ -24,8 +24,10 @@ This PowerShell Module interfaces to the Tenable.io API to allow interaction wit
 
 ### NOTE
 
-{{ Note Placeholder - Additional information that a user needs to know. }}
+The core function in this module is **Invoke-TioApiRequest**.  This function handles the basic requirements for talking to the Tenable.io API, including the Authentication Headers.
+
+Use of this PowerShell module requires the Tentable.io API Keys, which are comprised of an Access Key and a Secret Key.  These should be stored in a single PSObject containing two PSCredential Objects named **AccessKey** and **SecretKey**.
 
 ### SEE ALSO
 
-[Tenable API Explorer](https://developer.tenable.com/reference#navigate)
+[Tenable API Explorer](https://developer.tenable.com/reference)
