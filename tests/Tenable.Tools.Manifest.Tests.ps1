@@ -23,6 +23,9 @@ Describe "Tenable.Tools Module Manifest" {
     It 'Has a valid author.' {
       $Manifest.Author | Should -Not -BeNullOrEmpty
     }
+    It 'Has a valid Description.' {
+      $Manifest.Description | Should -Not -BeNullOrEmpty
+    }
     It 'Has a valid guid.' {
       { [guid]::Parse($Manifest.Guid) } | Should -Not -Throw
     }

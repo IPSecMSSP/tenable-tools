@@ -30,7 +30,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) John Berkers. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'A PowerShell Module to interface to the Tenable.IO Developer API'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '5.1'

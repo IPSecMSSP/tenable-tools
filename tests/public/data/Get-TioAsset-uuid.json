@@ -37,63 +37,31 @@
     {
       "name": "3",
       "aliased": false,
-      "fqdn": [
-        "hostname.domain.com"
-      ],
-      "mac_address": [
-        "00:12:34:56:78:9a"
-      ],
-      "ipv4": [
-        "192.168.10.10"
-      ],
+      "fqdn": ["hostname.domain.com"],
+      "mac_address": ["00:12:34:56:78:9a"],
+      "ipv4": ["192.168.10.10"],
       "ipv6": []
     },
     {
       "name": "UNKNOWN",
-      "fqdn": [
-        "hostname.domain.com"
-      ],
-      "mac_address": [
-        "00:12:34:56:78:9a"
-      ],
-      "ipv4": [
-        "192.168.10.10"
-      ],
+      "fqdn": ["hostname.domain.com"],
+      "mac_address": ["00:12:34:56:78:9a"],
+      "ipv4": ["192.168.10.10"],
       "ipv6": []
     }
   ],
-  "network_id": [
-    "00000000-0000-0000-0000-000000000000"
-  ],
-  "ipv4": [
-    "192.168.10.10"
-  ],
+  "network_id": ["00000000-0000-0000-0000-000000000000"],
+  "ipv4": ["192.168.10.10"],
   "ipv6": [],
-  "fqdn": [
-    "hostname.domain.com"
-  ],
-  "mac_address": [
-    "00:12:34:56:78:9a"
-  ],
-  "netbios_name": [
-    "HOSTNAME"
-  ],
-  "operating_system": [
-    "Microsoft Windows Server 2016 Standard"
-  ],
-  "system_type": [
-    "general-purpose"
-  ],
-  "tenable_uuid": [
-    "53ede5d70fe3464081846851a2cb372e"
-  ],
-  "hostname": [
-    "hostname"
-  ],
+  "fqdn": ["hostname.domain.com"],
+  "mac_address": ["00:12:34:56:78:9a"],
+  "netbios_name": ["HOSTNAME"],
+  "operating_system": ["Microsoft Windows Server 2016 Standard"],
+  "system_type": ["general-purpose"],
+  "tenable_uuid": ["53ede5d70fe3464081846851a2cb372e"],
+  "hostname": ["hostname"],
   "agent_name": [],
-  "bios_uuid": [
-    "e5d90942-7372-7fb3-379d-987bb59c9ef9"
-  ],
+  "bios_uuid": ["e5d90942-7372-7fb3-379d-987bb59c9ef9"],
   "aws_ec2_instance_id": [],
   "aws_ec2_instance_ami_id": [],
   "aws_owner_id": [],
