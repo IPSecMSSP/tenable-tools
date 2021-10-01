@@ -154,7 +154,7 @@ if($EnabledTioTagCategories) {
     Write-Verbose "$(Get-TimeStamp) - Synchronising Tag Category: $TioTagCategory"
     $TagCategoryValues = Get-TioTagValue -ApiKeys $ApiKeys -CategoryName $TioTagCategory
     $TagCategoryValueIds = ($TagCategoryValues).uuid
-    $TagCategoryValueNames = ($TagCategoryValues).value
+    #$TagCategoryValueNames = ($TagCategoryValues).value
 
     foreach ($TagUuid in $TagCategoryValueIds) {
       # Construct List Name

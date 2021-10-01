@@ -47,7 +47,7 @@ Prefix to use with lists created by the script.  Defaults to ***TIO***.
 
 ### EntityName
 
-Entity to assign list to.  This has an effect on who can Read/Write the list, depending on permissions assigned.  Specifically, for ***restricted*** Access values, users in the same entity whith the same or higher permission can interact with the list in the way specified.
+Entity to assign list to.  This has an effect on who can Read/Write the list, depending on permissions assigned.  Specifically, for ***restricted*** Access values, users in the same entity with the same or higher permission can interact with the list in the way specified.
 
 Defalts to ***Primary Site***
 
