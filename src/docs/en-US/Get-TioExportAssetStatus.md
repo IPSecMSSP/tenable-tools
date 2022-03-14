@@ -52,7 +52,7 @@ Get details for Asset Export Request with UUID **ad082ebc-e375-4250-93b3-ded6dd2
 
 ### Uri
 
-Optional. Defaults to **[https://cloud.tenable.com/]**, specify to override.
+Optional. Defaults to **[https://cloud.tenable.com/](https://cloud.tenable.com)**, specify to override.
 
 ### ApiKeys
 

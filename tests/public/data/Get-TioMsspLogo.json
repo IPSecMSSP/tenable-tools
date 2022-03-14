@@ -1,0 +1,16 @@
+{
+  "logos": [
+    {
+      "uuid": "1fa3edcc-8edd-42f7-b6d1-1f5cd1599d4e",
+      "container_uuid": "cc747ae7-9843-4ebb-8793-9424bc9ed000",
+      "name": "MSSP Logo 1",
+      "filename": "logo1.png"
+    },
+    {
+      "uuid": "82a1e359-3b77-45e1-89ea-66ddf1b5bbe0",
+      "container_uuid": "0f772c9f-acee-4cd0-b476-7bfd17c9a0b9",
+      "name": "MSSP Logo 2",
+      "filename": "logo2.png"
+    }
+  ]
+}

@@ -104,7 +104,7 @@ Get all details (from the first 5000 assets returned) for a host with UUID **ad0
 
 ### Uri
 
-Optional. Defaults to **[https://cloud.tenable.com/]**, specify to override.
+Optional. Defaults to **[https://cloud.tenable.com/](https://cloud.tenable.com)**, specify to override.
 
 ### ApiKeys
 

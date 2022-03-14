@@ -138,7 +138,7 @@ Add-BuildTask GenerateHelp EnsurePlatyPS, {
 }
 
 # Main 'Build' task to run all preceding tasks and package the module ready for production.
-Add-BuildTask Build Test, Clean, Compile, GenerateHelp
+Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 
 # Alias Invoke-Build's default task to the main 'Build' task.
 Add-BuildTask . Build
