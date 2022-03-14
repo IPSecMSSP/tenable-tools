@@ -16,9 +16,6 @@ stages:
 
 megalinter:
   extends: .megalinter-minimal
-  image:
-    name: nvuillam/mega-linter-dotnet:latest
-    entrypoint: [""]
 
 pester:
   extends: .pwsh_pester

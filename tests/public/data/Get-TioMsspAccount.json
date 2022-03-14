@@ -1,0 +1,40 @@
+{
+  "accounts": [
+    {
+      "uuid": "f5e877c6-b078-442e-90ff-b7cd4edff3e9",
+      "container_name": "domain.com-1111",
+      "custom_name": "Customer Name 1",
+      "sso_username": "contact@customerone.com",
+      "region": "Asia Pacific (Sydney)",
+      "site_id": "ap-syd-1",
+      "licensed_assets": 0,
+      "licensed_assets_limit": 100,
+      "licensed_apps": ["lumin", "consec", "was", "vm", "pci"],
+      "notes": "Account for Customer Name 1"
+    },
+    {
+      "uuid": "0229a359-d11e-424e-90e9-fe080608c74a",
+      "container_name": "domain.com-1113",
+      "custom_name": "Customer Name 3",
+      "sso_username": "contact@customerthree.com",
+      "region": "Asia Pacific (Sydney)",
+      "site_id": "ap-syd-1",
+      "licensed_assets": 23,
+      "licensed_assets_limit": 50,
+      "licensed_apps": ["lumin", "was", "vm"],
+      "notes": "Account for Customer Name 3"
+    },
+    {
+      "uuid": "2c0e43c5-f681-4305-8ace-e595d0b1f072",
+      "container_name": "domain.com-1112",
+      "custom_name": "Customer Name 2",
+      "sso_username": "contact@customertwo.com",
+      "region": "Asia Pacific (Sydney)",
+      "site_id": "ap-syd-1",
+      "licensed_assets": 136,
+      "licensed_assets_limit": 200,
+      "licensed_apps": ["pci"],
+      "logo_uuid": "1fa3edcc-8edd-42f7-b6d1-1f5cd1599d4e"
+    }
+  ]
+}
