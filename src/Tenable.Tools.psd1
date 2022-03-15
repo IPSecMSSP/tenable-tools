@@ -105,7 +105,7 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://gitlab.soc.ipsec.net.au/vendors/tenable/tenable-tools'
+        ProjectUri = 'https://github.com/jberkers42/tenable-tools'
 
         # A URL to an icon representing this module.
         # IconUri = ''

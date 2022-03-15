@@ -17,8 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Requires an MSSP Account
 - Tests for added functions
 - Documentation for added functions
+- Added GitHub Actions Workflow for Megalinter
 
-## [0.0.1] - Insert release date
+### Changed
+
+- Migrated primary development to GitHub
+- Updated project links to use GitHub
+
+## [0.0.1] - 2021-09-17
 
 ### Added
 
@@ -46,7 +52,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known Issues
 
-- [#1](https://gitlab.soc.ipsec.net.au/vendors/tenable/tenable-tools/-/issues/1) Documentation is somewhat lacking
-
-[Unreleased]: https://gitlab.soc.ipsec.net.au/vendors/tenable/tenable-tools/
-[0.0.1]: https://gitlab.soc.ipsec.net.au/vendors/tenable/tenable-tools/-/releases/v0.0.1
+[Unreleased]: https://github.com/jberkers42/tenable-tools/
+[0.0.1]: https://github.com/jberkers42/tenable-tools/releases/tag/v0.0.1
