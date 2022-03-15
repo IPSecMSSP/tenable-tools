@@ -65,7 +65,7 @@ List all folders of type **custom**.
 
 ### Uri
 
-Optional. Defaults to **[https://cloud.tenable.com/]**, specify to override.
+Optional. Defaults to **[https://cloud.tenable.com/](https://cloud.tenable.com)**, specify to override.
 
 ### ApiKeys
 

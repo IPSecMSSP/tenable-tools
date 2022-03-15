@@ -33,7 +33,13 @@ Add-BuildTask GenerateVSCodeTasks EnsureNewVSCodeTask, {
 
 # Task for invoking PSScriptAnalyzer at the project root.
 Add-BuildTask Analyze EnsurePSScriptAnalyzer, {
-  $Results = Invoke-ScriptAnalyzer -Path $BuildRoot -Recurse
+  $PsScriptAnalyzerPreferenceFile = "$BuildRoot\.github\linters\.powershell-psscriptanalyzer.psd1"
+  if (Test-Path -Path $PsScriptAnalyzerPreferenceFile) {
+    # Use the preferences (enable/disable rules) if we have them
+    $Results = Invoke-ScriptAnalyzer -Path $BuildRoot -Recurse -Settings $PsScriptAnalyzerPreferenceFile
+  } else {
+    $Results = Invoke-ScriptAnalyzer -Path $BuildRoot -Recurse
+  }
   if ($Results) {
     $Results | Format-Table
     throw "One or more PSScriptAnalyzer errors/warnings where found."
@@ -138,7 +144,7 @@ Add-BuildTask GenerateHelp EnsurePlatyPS, {
 }
 
 # Main 'Build' task to run all preceding tasks and package the module ready for production.
-Add-BuildTask Build Test, Clean, Compile, GenerateHelp
+Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 
 # Alias Invoke-Build's default task to the main 'Build' task.
 Add-BuildTask . Build
