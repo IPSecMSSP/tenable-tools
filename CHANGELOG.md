@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2022-03-15
+
 ### Added
 
 - New-TioCredential function to construct an expected object that can be used as the -ApiKeys parameter on other functions
@@ -23,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Migrated primary development to GitHub
 - Updated project links to use GitHub
+- Updated minimum PowerShell version to 7.0 due to `-ResponseHeadersVariable` use on `Invoke-RestMethod`
+- Use the same PSScriptAnalyzer settings for Build Script as used by MegaLinter
 
 ## [0.0.1] - 2021-09-17
 
