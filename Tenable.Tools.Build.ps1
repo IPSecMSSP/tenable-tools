@@ -1,4 +1,4 @@
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','')]
 param(
   [Parameter(Mandatory=$False)]
   [string]$CertificateName = 'IPSec SOC Internal Code Signing',
