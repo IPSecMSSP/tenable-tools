@@ -27,7 +27,7 @@ pester:
   extends: .pwsh_pester
 
 publish:
-  extends: .psmodule-publish
+  extends: .pspublish
 
 release_job:
   extends: .release_job
