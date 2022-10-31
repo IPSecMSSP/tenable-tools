@@ -10,12 +10,23 @@ include:
     ref: master
     file: "/test/pwsh-pester.yml"
 
+  - project: "ipsec/citemplates"
+    ref: master
+    file: "/psmodule/pspublish.yml"
+
 stages:
   - linting
   - test
+  - publish
+  - release
 
 megalinter:
   extends: .megalinter-minimal
 
 pester:
   extends: .pwsh_pester
+
+publish:
+  extends: .psmodule-publish
+#release_job:
+#  extends: .release_job
