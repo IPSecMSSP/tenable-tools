@@ -12,7 +12,7 @@ include:
 
   - project: "ipsec/citemplates"
     ref: master
-    file: "/psmodule/pspublish.yml"
+    file: "/psmodule/pwshpublish.yml"
 
 stages:
   - linting
