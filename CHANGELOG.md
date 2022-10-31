@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2022-10-31
+
 ### Added
 
 - Code Signing using GitLab Windows Runner
 - Publish to PSGallery when merging to main or master
+- Temporarily signed with internal certificate
 
 ## [0.0.2] - 2022-03-15
 
