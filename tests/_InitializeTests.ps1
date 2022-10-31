@@ -11,7 +11,7 @@ Import-Module $ModuleManifestPath -Force -ErrorAction Stop
 # This might include "Fake Credentials", paths, URLs, etc that need to be passed as parameters in tests.
 
 # Fake Secure String
-$TestSecureAccessKey = ConvertTo-SecureString '54006500730074002000500061007300730077006f0072006400'
+$TestSecureAccessKey = ConvertTo-SecureString -String '54006500730074002000500061007300730077006f0072006400' -AsPlainText
 $TestAccess = 'AccessKey'
 $TestSecret = 'SecretKey'
 
