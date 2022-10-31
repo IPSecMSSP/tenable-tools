@@ -12,7 +12,7 @@ include:
 
   - project: "ipsec/citemplates"
     ref: master
-    file: "/psmodule/psmodule-publish.yml"
+    file: "/psmodule/pspublish.yml"
 
 stages:
   - linting
@@ -27,7 +27,7 @@ pester:
   extends: .pwsh_pester
 
 publish:
-  extends: .pspublish
+  extends: .psmodule-publish
 
 release_job:
   extends: .release_job
