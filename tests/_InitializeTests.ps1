@@ -1,3 +1,5 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','')]
+Param ()
 # Define common module info variables.
 $ModuleName = "Tenable.Tools"
 $ModuleManifestName = "$ModuleName.psd1"
@@ -11,8 +13,7 @@ Import-Module $ModuleManifestPath -Force -ErrorAction Stop
 # This might include "Fake Credentials", paths, URLs, etc that need to be passed as parameters in tests.
 
 # Fake Secure String
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','')]
-$TestSecureAccessKey = ConvertTo-SecureString -String '54006500730074002000500061007300730077006f0072006400' -AsPlainText
+$TestSecureAccessKey = ConvertTo-SecureString -String '54006500730074002000500061007300730077006f0072006400' -AsPlainText -Force
 $TestAccess = 'AccessKey'
 $TestSecret = 'SecretKey'
 
