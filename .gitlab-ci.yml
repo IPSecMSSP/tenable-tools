@@ -28,6 +28,5 @@ pester:
 
 publish:
   extends: .psmodule-publish
-
 #release_job:
 #  extends: .release_job
