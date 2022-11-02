@@ -1,5 +1,10 @@
 {
   "retryOn429": true,
   "retryCount": 5,
-  "aliveStatusCodes": [200, 201, 202, 203, 204, 300, 301, 302, 303, 401, 403]
+  "aliveStatusCodes": [200, 201, 202, 203, 204, 300, 301, 302, 303, 401, 403],
+  "ignorePatterns": [
+    {
+      "pattern": "^https://github.com/.*/releases/"
+    }
+  ]
 }
