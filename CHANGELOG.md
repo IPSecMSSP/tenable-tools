@@ -46,6 +46,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release of Tenable.Tools
+- Get-TioAsset
+- Get-TioExportAsset
+- Get-TioExportAssetChunk
+- Get-TioExportAssetStatus
+- Stop-TioExportAsset
+- Get-TioFolder
+- Invoke-TioApiRequest
+- Get-TioTagCategory
+- Get-TioTagValue
 
 ### Changed
 
