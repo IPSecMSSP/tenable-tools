@@ -174,7 +174,7 @@ Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 Add-BuildTask . Build
 
 # Task for publishing the built module to the PowerShell Gallery, which will also run a build.
-Add-BuildTask Publish Build, {
+Add-BuildTask Publish Build, Sign, {
   $SourceDirectory = "$BuildRoot\src"
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
   $BuildDirectory = "$BuildRoot\build\$($Module.BaseName)"
