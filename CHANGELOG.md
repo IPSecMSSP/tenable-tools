@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Publish to PSGallery when merging to main or master
 - Temporarily signed with internal certificate
 
+### Changed
+
+- Migrated primary development back to IPSec internal
+  - Code signing security reasons
+
 ## [0.0.2] - 2022-03-15
 
 ### Added
@@ -65,4 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Known Issues
 
 [Unreleased]: https://github.com/jberkers42/tenable-tools/
-[0.0.1]: https://github.com/jberkers42/tenable-tools/releases/tag/v0.0.1
+[1.0.0]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.0.0
+[0.0.2]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v0.0.2
+[0.0.1]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v0.0.1
