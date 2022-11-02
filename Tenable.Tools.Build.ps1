@@ -7,7 +7,10 @@ param(
   [string]$CertificateStore = 'LocalMachine',
 
   [Parameter(Mandatory=$False)]
-  [string]$CertificateLocation = 'MY'
+  [string]$CertificateLocation = 'MY',
+
+  [Parameter(Mandatory=$False)]
+  [string]$PSGalleryAPIKey = $Env:PSGalleryAPIKey
 )
 
 # Task for installing Pester if not present.
@@ -181,11 +184,11 @@ Add-BuildTask Publish Build, Sign, {
   $Manifest = Import-PowerShellDataFile -Path $Module.FullName
   $ModuleVersion = $Manifest.ModuleVersion
 
-  Assert-Build ($env:PSGalleryAPIKey) "PowerShell Gallery API Key environment variable not found!"
+  Assert-Build ($PSGalleryAPIKey) "PowerShell Gallery API Key Parameter not found!"
   Try {
     $Params = @{
       Path        = "$BuildDirectory"
-      NuGetApiKey = $env:PSGalleryAPIKey
+      NuGetApiKey = $PSGalleryAPIKey
       ErrorAction = "Stop"
     }
     Publish-Module @Params
