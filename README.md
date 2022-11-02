@@ -12,7 +12,7 @@ This module is undergoing a process to implement code-signing with a valid publi
 
 As a result of implementing code signing, we have moved the project from `jberkers42` to `IPSecMSSP` on GitHub, and have switched back to using our internal GitLab instance to manage the overall development process. Whenever code is published to a protected branch in GitLab, the protected branches will be mirrored to GitHub automatically.
 
-Code Signing is performed on a secure system at IPSec.
+Code Signing is performed on a secure system at IPSec to ensure the singing keys are adequately protected.
 
 ## Getting Started
 
