@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2022-11-15
+
+### Fixed
+
+- Use correct code signing certificate
+
+## [1.0.2] - 2022-11-14
+
+### Changed
+
+- Switch Code Signing Certificate to `IPSec Pty Ltd`
+- Updated project references
+
 ## [1.0.0] - 2022-10-31
 
 ### Added
@@ -79,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Known Issues
 
 [Unreleased]: https://github.com/jberkers42/tenable-tools/
+[1.0.2]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.0.2
 [1.0.0]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.0.0
 [0.0.2]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v0.0.2
 [0.0.1]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v0.0.1

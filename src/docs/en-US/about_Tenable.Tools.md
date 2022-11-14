@@ -30,4 +30,5 @@ Use of this PowerShell module requires the Tentable.io API Keys, which are compr
 
 ### SEE ALSO
 
+[Tenable.Tools Project](https://github.com/IPSecMSSP/tenable-tools)
 [Tenable API Explorer](https://developer.tenable.com/reference)

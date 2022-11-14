@@ -132,5 +132,6 @@ For background information about logos in the Tenable.io MSSP Portal, see Logos 
 
 ## RELATED LINKS
 
+[Tenable.Tools Project](https://github.com/IPSecMSSP/tenable-tools)
 [Tenable Developer API Reference : MSSP : Logos](https://developer.tenable.com/reference#io-mssp-logos)
 [Tenable.io MSSP Portal User Guide](https://docs.tenable.com/tenableio/mssp/Content/Welcome.htm)

@@ -171,4 +171,5 @@ Use the API to list assets, get individual asset information, import assets, and
 
 ## RELATED LINKS
 
+[Tenable.Tools Project](https://github.com/IPSecMSSP/tenable-tools)
 [Tenable Developer API Reference : Assets](https://developer.tenable.com/reference#assets)
