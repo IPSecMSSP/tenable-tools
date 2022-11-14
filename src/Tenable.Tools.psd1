@@ -12,7 +12,7 @@
 RootModule = 'Tenable.Tools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -24,10 +24,10 @@ GUID = '75461957-f713-46f6-9e44-dd0b45be42b5'
 Author = 'John Berkers'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'IPSec Pty Ltd'
 
 # Copyright statement for this module
-Copyright = '(c) John Berkers. All rights reserved.'
+Copyright = '(c) IPSec Pty Ltd. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'A PowerShell Module to interface to the Tenable.IO Developer API'
@@ -105,13 +105,13 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/jberkers42/tenable-tools'
+        ProjectUri = 'https://github.com/IPSecMSSP/tenable-tools'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Initial Module work'
+        ReleaseNotes = 'First Official Release, with code-signing'
 
         # Prerelease string of this module
         # Prerelease = ''

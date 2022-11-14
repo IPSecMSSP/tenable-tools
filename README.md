@@ -6,14 +6,30 @@ PowerShell module for interfacing to the Tenable.io API
 
 Tenable.Tools provides an interface to the Tenable.io API
 
+## Code Signing
+
+This module is undergoing a process to implement code-signing with a valid public Code Signing certificate. The PSGallery version of the module will be signed, however, any local builds from source will not.
+
+As a result of implementing code signing, we have moved the project from `jberkers42` to `IPSecMSSP` on GitHub, and have switched back to using our internal GitLab instance to manage the overall development process. Whenever code is published to a protected branch in GitLab, the protected branches will be mirrored to GitHub automatically.
+
+Code Signing is performed on a secure system at IPSec to ensure the singing keys are adequately protected.
+
 ## Getting Started
 
 ### PowerShell Gallery
 
 Install Tenable.Tools from the [PowerShell Gallery](https://www.powershellgallery.com/) using `Install-Module`.
 
+For just the current user:
+
 ```powershell
 Install-Module -Name Tenable.Tools -Scope CurrentUser
+```
+
+For all users:
+
+```powershell
+Install-Module -Name Tenable.Toosl -Scope AllUsers
 ```
 
 ### Local Build
