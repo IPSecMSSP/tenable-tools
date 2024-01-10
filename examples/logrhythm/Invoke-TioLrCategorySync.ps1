@@ -59,7 +59,7 @@ param(
   [Parameter(Mandatory=$false)]
   [string]$EntityName = 'Primary Site',
 
-  [Parameter(Mandatory=$true)]
+  [Parameter(Mandatory=$false)]
   $ListOwner,
 
   [Parameter(Mandatory=$false)]
@@ -80,19 +80,25 @@ param(
 )
 
 #region List Owner Details
-if ($ListOwner -is [int]) {
-  # If the ListOwner is an integer, use that as the ID
-  $ListOwnerId = $ListOwner
-  Write-Verbose "$(Get-Timestamp)List Owner ID: $ListOwnerId"
-} else {
-  $ListOwnerResults = Get-LrUsers -Name $ListOwner -Exact
-
-  if ($ListOwnerResults) {
-    $ListOwnerId = $ListOwnerResults | Select-Object -ExpandProperty number
+If ($PSBoundParameters -contains 'ListOwner') {
+  # List Owner was provided, perform some validation
+  if ($ListOwner -is [int]) {
+    # If the ListOwner is an integer, use that as the ID
+    $ListOwnerId = $ListOwner
     Write-Verbose "$(Get-Timestamp)List Owner ID: $ListOwnerId"
   } else {
-    return "$(Get-timestamp) Error - Unable to retrieve user identity ID for user: $ListOwner"
+    $ListOwnerResults = Get-LrUsers -Name $ListOwner -Exact
+
+    if ($ListOwnerResults) {
+      $ListOwnerId = $ListOwnerResults | Select-Object -ExpandProperty number
+      Write-Verbose "$(Get-Timestamp)List Owner ID: $ListOwnerId"
+    } else {
+      return "$(Get-timestamp) Error - Unable to retrieve user identity ID for user: $ListOwner"
+    }
   }
+} else {
+  # List Owner was not provided, use ID from LR Token (ie, current user)
+  $ListOwnerId = (Get-LrApiTokenInfo).UserId
 }
 
 #endregion
@@ -180,24 +186,30 @@ if($EnabledTioTagCategories) {
 
       if (!$HostnameOnly) {
         # Build (a) list(s) of values to load into the list.
-        $IPv4List = ($AssetList | Select-Object -Property 'ipv4s').ipv4s
+        $IPv4List = ($AssetList | Select-Object -Property 'ipv4s').ipv4s | Select-Object -Unique
 
         # Populate list with IPs
         if($IPv4List.Count -gt 0) {
           Write-Information "$(Get-TimeStamp) - Syncing Quantity: $($IPv4List.Count) IPv4 to List $ListTioCategoryValueName"
-          Sync-LrListItems -Value $IPv4List -Name $ListTioCategoryValueName
+          $result = Sync-LrListItems -Value $IPv4List -Name $ListTioCategoryValueName
+          if ($result.Error) {
+            Write-Verbose "$(Get-TimeStamp) - IPv4 Items - Something went Wrong"
+          }
         } else {
           Write-Information "$(Get-TimeStamp) - IPv4 Quantity: $($IPv4List.Count)"
         }
       }
 
       If(!$IPv4Only) {
-        $HostnameList = ($AssetList | Select-Object -Property 'hostnames').hostnames
+        $HostnameList = ($AssetList | Select-Object -Property 'hostnames').hostnames | Select-Object -Unique
 
         # Populate list with HostNames
         if($HostnameList.Count -gt 0) {
           Write-Information "$(Get-TimeStamp) - Syncing Quantity: $($HostnameList.Count) IPv4 to List $ListTioCategoryValueName"
-          Sync-LrListItems -Value $HostnameList -Name $ListTioCategoryValueName
+          $result = Sync-LrListItems -Value $HostnameList -Name $ListTioCategoryValueName
+          if ($result.Error) {
+            Write-Verbose "$(Get-TimeStamp) - Hostname Items - Something went Wrong"
+          }
         } else {
           Write-Information "$(Get-TimeStamp) - IPv4 Quantity: $($HostnameList.Count)"
         }
