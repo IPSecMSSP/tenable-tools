@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Example Script: Invoke-TioLrCategorySync.ps1 with documentation
+
 ## [1.0.3] - 2022-11-15
 
 ### Fixed
