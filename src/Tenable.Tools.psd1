@@ -12,7 +12,7 @@
 RootModule = 'Tenable.Tools.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.3'
+ModuleVersion = '1.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -113,7 +113,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'First Official Release, with code-signing'
+        ReleaseNotes = 'Vulnerability Exports'
 
         # Prerelease string of this module
         # Prerelease = ''
