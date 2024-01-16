@@ -99,14 +99,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Object containing subset of details about the asset, unless queried by UUID.
 
-```text
   unread_count : 3
   custom       : 0
   default_tag  : 1
   type         : main
   name         : My Scans
   id           : 5
-```
 
 ## NOTES
 

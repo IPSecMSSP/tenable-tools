@@ -117,7 +117,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Object containing details of the account.
 
-```text
   uuid                  : f5e877c6-b078-442e-90ff-b7cd4edff3e9
   container_name        : domain.com-1111
   custom_name           : Customer Name 1
@@ -128,7 +127,6 @@ Object containing details of the account.
   licensed_assets_limit : 100
   licensed_apps         : {lumin, consec, was, vm…}
   notes                 : Account for Customer Name 1
-```
 
 ## NOTES
 
