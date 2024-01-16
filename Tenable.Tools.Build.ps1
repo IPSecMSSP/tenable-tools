@@ -186,7 +186,7 @@ Add-BuildTask SignKV EnsureAzureSignTool, Compile, {
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
   $BuildDirectory = "{0}\build\{1}" -f $BuildRoot, $Module.BaseName
 
-  $Files = (Get-ChildItem $BuildDirectory -File -Recurse -Include *.ps1, *.ps1xml, *.psd1, *.psm1, *.pssc, *.psrc, *.cdxml).FullName -join " "
+  $Files = (Get-ChildItem $BuildDirectory -File -Recurse -Include *.ps1, *.ps1xml, *.psd1, *.psm1, *.pssc, *.psrc, *.cdxml).FullName
 
   # azuresigntool.exe sign -kvu https://azmb-kv01.vault.azure.net/ -kvc IPSecPtyLtd -kvm -d "Tenable.Tools PowerShell Module" -tr http://timestamp.digicert.com -td sha384 -v .\Tenable.Tools.psm1
   azuresigntool.exe sign -kvu $KeyVaultURL -kvc $CertificateName -kvm -tr http://timestamp.digicert.com -td sha384 -v $Files
