@@ -44,6 +44,13 @@ Add-BuildTask EnsureNewVSCodeTask {
   }
 }
 
+Add-BuildTask EnsureAzureSignTool {
+  if (!(Get-Command azuresigntool.exe)) {
+    dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+    dotnet tool install --global AzureSignTool
+  }
+}
+
 # Task for generating a new/updated tasks.json for VS Code workspace.
 Add-BuildTask GenerateVSCodeTasks EnsureNewVSCodeTask, {
   New-VSCodeTask.ps1
@@ -174,7 +181,7 @@ Add-BuildTask Sign Compile, {
 }
 
 # Task to sign the 'Compiled' Module using the specified, or default Signing Key, stored in Azure Key Vault
-Add-BuildTask SignKV Compile, {
+Add-BuildTask SignKV EnsureAzureSignTool, Compile, {
   $SourceDirectory = "{0}\src" -f $BuildRoot
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
   $BuildDirectory = "{0}\build\{1}" -f $BuildRoot, $Module.BaseName
