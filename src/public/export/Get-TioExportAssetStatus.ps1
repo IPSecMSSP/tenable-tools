@@ -1,7 +1,7 @@
 function Get-TioExportAssetStatus {
   <#
   .SYNOPSIS
-    Cancel an in-progress asset export
+    Get the status of an in-progress asset export
   .DESCRIPTION
     This function returns information about one or more Tenable.io Assets
   .PARAMETER Uri

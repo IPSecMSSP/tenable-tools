@@ -1,9 +1,9 @@
-function Stop-TioExportAsset {
+function Get-TioExportVulnStatus {
   <#
   .SYNOPSIS
-    Cancel an in-progress asset export
+    Get the status of an in-progress Vuln export
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Assets
+    This function returns information about one or more Tenable.io Vulns
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER ApiKeys
@@ -12,13 +12,13 @@ function Stop-TioExportAsset {
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Filter
-    Specifies filters for exported assets. To return all assets, omit the filters object. If
+    Specifies filters for exported Vulns. To return all Vulns, omit the filters object. If
     your request specifies multiple filters, the system combines the filters using the AND search operator.
   .OUTPUTS
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ListAll',SupportsShouldProcess)]
+  [CmdletBinding(DefaultParameterSetName='ListAll')]
 
   param(
     [Parameter(Mandatory=$false,
@@ -38,12 +38,10 @@ function Stop-TioExportAsset {
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
     [ValidateSet("Post","Get","Put","Delete")]
-    [string] $Method = "POST",
+    [string] $Method = "GET",
 
-    [Parameter(Mandatory=$false,
+    [Parameter(Mandatory=$true,
       ParameterSetName = 'ById',
-      ValueFromPipeline = $true,
-      ValueFromPipelineByPropertyName = $true,
       HelpMessage = 'Filter condition')]
     [string] $Uuid
   )
@@ -53,18 +51,20 @@ function Stop-TioExportAsset {
 
     Write-Verbose $Me
 
-    $Uri.Path = [io.path]::combine($Uri.Path, "assets/export", $uuid, "cancel")
+    $Uri.Path = [io.path]::combine($Uri.Path, "vulns/export", $uuid, "status")
 
   }
 
   Process {
-    # Initiate the Asset Export
+    # Get an updated Vuln export status
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    if ($PSCmdlet.ShouldProcess($Uri.Uri, "Cancel Asset Export")) {
-      $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
-    }
+    $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
 
-    Write-Output $ExportStatus
+    if ($ExportStatus.exports) {
+      Write-Output $ExportStatus.exports
+    } else {
+      Write-Output $ExportStatus
+    }
 
   }
 
