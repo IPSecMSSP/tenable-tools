@@ -176,7 +176,7 @@ Add-BuildTask Sign Compile, {
 # Task to sign the 'Compiled' Module using the specified, or default Signing Key, stored in Azure Key Vault
 Add-BuildTask SignKV Compile, {
   $SourceDirectory = "{0}\src" -f $BuildRoot
-  $Module = Get-ChildItem =Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
+  $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
   $BuildDirectory = "{0}\build\{1}" -f $BuildRoot, $Module.BaseName
 
   $Files = (Get-ChildItem $BuildDirectory -File -Recurse -Include *.ps1, *.ps1xml, *.psd1, *.psm1, *.pssc, *.psrc, *.cdxml).FullName -join " "
