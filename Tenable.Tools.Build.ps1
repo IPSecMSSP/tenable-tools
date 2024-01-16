@@ -1,13 +1,16 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','')]
 param(
   [Parameter(Mandatory=$False)]
-  [string]$CertificateName = 'IPSec Pty Ltd',
+  [string]$CertificateName = 'IPSecPtyLtd',
 
   [Parameter(Mandatory=$False)]
   [string]$CertificateStore = 'LocalMachine',
 
   [Parameter(Mandatory=$False)]
   [string]$CertificateLocation = 'MY',
+
+  [Parameter(Mandatory=$False)]
+  [string]$KeyVaultURL = 'https://azmb-kv01.vault.azure.net/',
 
   [Parameter(Mandatory=$False)]
   [string]$PSGalleryAPIKey = $Env:PSGalleryAPIKey
@@ -170,6 +173,17 @@ Add-BuildTask Sign Compile, {
   $null = Get-ChildItem $BuildDirectory -File -Recurse -Include *.ps1, *.ps1xml, *.psd1, *.psm1, *.pssc, *.psrc, *.cdxml | Set-AuthenticodeSignature -HashAlgorithm SHA256 -Certificate $Certificate -TimestampServer http://timestamp.digicert.com
 }
 
+# Task to sign the 'Compiled' Module using the specified, or default Signing Key, stored in Azure Key Vault
+Add-BuildTask SignKV Compile, {
+  $SourceDirectory = "{0}\src" -f $BuildRoot
+  $Module = Get-ChildItem =Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
+  $BuildDirectory = "{0}\build\{1}" -f $BuildRoot, $Module.BaseName
+
+  $Files = (Get-ChildItem $BuildDirectory -File -Recurse -Include *.ps1, *.ps1xml, *.psd1, *.psm1, *.pssc, *.psrc, *.cdxml).FullName -join " "
+
+  # azuresigntool.exe sign -kvu https://azmb-kv01.vault.azure.net/ -kvc IPSecPtyLtd -kvm -d "Tenable.Tools PowerShell Module" -tr http://timestamp.digicert.com -td sha384 -v .\Tenable.Tools.psm1
+  azuresigntool.exe sign -kvu $KeyVaultURL -kvc $CertificateName -kvm -tr http://timestamp.digicert.com -td sha384 -v $Files
+}
 # Main 'Build' task to run all preceding tasks and package the module ready for production.
 Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 
@@ -177,7 +191,7 @@ Add-BuildTask Build Clean, Test, Compile, GenerateHelp
 Add-BuildTask . Build
 
 # Task for publishing the built module to the PowerShell Gallery, which will also run a build.
-Add-BuildTask Publish Build, Sign, {
+Add-BuildTask Publish Build, SignKV, {
   $SourceDirectory = "$BuildRoot\src"
   $Module = Get-ChildItem -Path $SourceDirectory -Filter *.psd1 -Recurse | Select-Object -First 1
   $BuildDirectory = "$BuildRoot\build\$($Module.BaseName)"

@@ -1,9 +1,10 @@
-function Stop-TioExportAsset {
+function Get-TioExportVulnChunk {
   <#
   .SYNOPSIS
-    Cancel an in-progress asset export
+    Download exported Vuln chunk by ID.
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Assets
+    Download exported Vuln chunk by ID. Chunks are available for download for up to 24 hours after they have been created.
+    Tenable.io returns a 404 message for expired chunks.
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER ApiKeys
@@ -11,14 +12,15 @@ function Stop-TioExportAsset {
     Must contain PSCredential Objects named AccessKey and SecretKey with the respective keys stored in the Password property
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
-  .PARAMETER Filter
-    Specifies filters for exported assets. To return all assets, omit the filters object. If
-    your request specifies multiple filters, the system combines the filters using the AND search operator.
+  .PARAMETER Uuid
+    The UUID of the export request.
+  .PARAMETER Chunk
+    The ID of the Vuln Chunk you want to download
   .OUTPUTS
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ListAll',SupportsShouldProcess)]
+  [CmdletBinding(DefaultParameterSetName='ById')]
 
   param(
     [Parameter(Mandatory=$false,
@@ -38,14 +40,17 @@ function Stop-TioExportAsset {
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
     [ValidateSet("Post","Get","Put","Delete")]
-    [string] $Method = "POST",
+    [string] $Method = "GET",
 
-    [Parameter(Mandatory=$false,
+    [Parameter(Mandatory=$true,
       ParameterSetName = 'ById',
-      ValueFromPipeline = $true,
-      ValueFromPipelineByPropertyName = $true,
-      HelpMessage = 'Filter condition')]
-    [string] $Uuid
+      HelpMessage = 'Vuln Export UUID')]
+    [string] $Uuid,
+
+    [Parameter(Mandatory=$true,
+      ParameterSetName = 'ById',
+      HelpMessage = 'Vuln Chunk Number')]
+    [string] $Chunk
   )
 
   Begin {
@@ -53,18 +58,16 @@ function Stop-TioExportAsset {
 
     Write-Verbose $Me
 
-    $Uri.Path = [io.path]::combine($Uri.Path, "assets/export", $uuid, "cancel")
+    $Uri.Path = [io.path]::combine($Uri.Path, "vulns/export", $uuid, "chunks", $Chunk)
 
   }
 
   Process {
-    # Initiate the Asset Export
+    # Initiate the Vuln Export
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    if ($PSCmdlet.ShouldProcess($Uri.Uri, "Cancel Asset Export")) {
-      $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
-    }
+    $ExportChunk = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
 
-    Write-Output $ExportStatus
+    Write-Output $ExportChunk
 
   }
 

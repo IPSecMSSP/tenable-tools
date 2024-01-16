@@ -147,6 +147,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Object containing subset of details about the asset, unless queried by UUID.
 
+```text
   uuid                 : 8f68a869-1cbc-4544-a252-b253cb1f2aaf
   created_at           : 05/10/2020 03:22:50
   created_by           : admin@domain.com
@@ -160,6 +161,7 @@ Object containing subset of details about the asset, unless queried by UUID.
   category_description :
   access_control       : @{current_user_permissions=System.Object[]}
   saved_search         : False
+```
 
 ## NOTES
 
