@@ -45,7 +45,7 @@ Add-BuildTask EnsureNewVSCodeTask {
 }
 
 Add-BuildTask EnsureAzureSignTool {
-  if (!(Get-Command azuresigntool.exe)) {
+  if (!(Get-Command azuresigntool.exe -ErrorAction SilentlyContinue)) {
     dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
     dotnet tool install --global AzureSignTool
   }
