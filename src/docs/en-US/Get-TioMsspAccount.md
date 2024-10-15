@@ -120,7 +120,7 @@ Object containing details of the account.
   uuid                  : f5e877c6-b078-442e-90ff-b7cd4edff3e9
   container_name        : domain.com-1111
   custom_name           : Customer Name 1
-  sso_username          : contact@customerone.com
+  sso_username          : `contact@customerone.com`
   region                : Asia Pacific (Sydney)
   site_id               : ap-syd-1
   licensed_assets       : 0

@@ -125,7 +125,7 @@ function Invoke-TioApiRequest {
         return $ErrorObject
       }
     }
-    Write-Verbose ($ResponseHeaders | ConvertTo-Json -Depth 5)
+    Write-Debug ($ResponseHeaders | ConvertTo-Json -Depth 5)
 
     Write-Output $Results
   }
