@@ -1,3 +1,4 @@
 build/
 /testResults.xml
 config/
+**/.DS_Store

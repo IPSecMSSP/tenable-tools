@@ -134,9 +134,9 @@ Object containing subset of details about the asset, unless queried by UUID.
 
   uuid        : fda11a4e-ffe2-47a2-9492-54575c40e256
   created_at  : 23/09/2020 06:50:18
-  created_by  : admin@domain.com
+  created_by  : `admin@domain.com`
   updated_at  : 29/09/2020 04:32:25
-  updated_by  : admin@domain.com
+  updated_by  : `admin@domain.com`
   name        : Linux Production Server
   description : Linux Production Server
   reserved    : False

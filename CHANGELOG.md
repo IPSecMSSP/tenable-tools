@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-10-15
+
+### Added
+
+- Get-TioAgent
+- Get-TioScanner
+- Get-TioServer
+- Get-TioServerStatus
+- Get-TioVulnPluginFamily
+- Get-TioVulnScan
+
+### Changed
+
+- Adjusted output level of response headers from Verbose to Debug
+
 ## [1.1.0] - 2024-01-16
 
 ### Added
@@ -110,6 +125,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Known Issues
 
 [Unreleased]: https://github.com/jberkers42/tenable-tools/
+[1.2.0]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.2.0
+[1.1.0]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.1.0
 [1.0.2]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.0.2
 [1.0.0]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v1.0.0
 [0.0.2]: https://github.com/IPSecMSSP/tenable-tools/releases/tag/v0.0.2
