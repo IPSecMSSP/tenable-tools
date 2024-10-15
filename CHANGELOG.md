@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2024-01-16
+
+### Added
+
+- Example Script: Invoke-TioLrCategorySync.ps1 with documentation
+- Get-TioExportVuln.ps1 - Export Vulnerabilities
+- Get-TioExportVulnStatus.ps1 - Get Export Vulnerability Job Status
+- Get-TioExportVulnChunk.ps1 - Export Vulerabilties by chunk
+- Stop-TioExportVuln.ps1 - Cancel Vulnerabilty Export
+- Get-TioVulnPlugin.ps1 - Export Vulnerability Plugin Details
+- Documentation for the above
+
+### Changed
+
+- Support Pipelining of Stop-TioExportAsset.ps1
+- Minor fixes in Documentation to suppress/fix Linting issues
+- Build script support to sign code using certificate stored in Azure Key Vault
+
 ## [1.0.3] - 2022-11-15
 
 ### Fixed

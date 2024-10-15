@@ -1,9 +1,9 @@
-function Stop-TioExportAsset {
+function Stop-TioExportVuln {
   <#
   .SYNOPSIS
-    Cancel an in-progress asset export
+    Cancel an in-progress Vuln export
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Assets
+    This function returns information about one or more Tenable.io Vulns
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER ApiKeys
@@ -12,7 +12,7 @@ function Stop-TioExportAsset {
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Filter
-    Specifies filters for exported assets. To return all assets, omit the filters object. If
+    Specifies filters for exported Vulns. To return all Vulns, omit the filters object. If
     your request specifies multiple filters, the system combines the filters using the AND search operator.
   .OUTPUTS
     PSCustomObject containing results if successful.  May be $null if no data is returned
@@ -53,14 +53,14 @@ function Stop-TioExportAsset {
 
     Write-Verbose $Me
 
-    $Uri.Path = [io.path]::combine($Uri.Path, "assets/export", $uuid, "cancel")
+    $Uri.Path = [io.path]::combine($Uri.Path, "vulns/export", $uuid, "cancel")
 
   }
 
   Process {
-    # Initiate the Asset Export
+    # Initiate the Vuln Export
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    if ($PSCmdlet.ShouldProcess($Uri.Uri, "Cancel Asset Export")) {
+    if ($PSCmdlet.ShouldProcess($Uri.Uri, "Cancel Vuln Export")) {
       $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
     }
 
