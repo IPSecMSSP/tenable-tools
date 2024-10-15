@@ -149,9 +149,9 @@ Object containing subset of details about the asset, unless queried by UUID.
 
   uuid                 : 8f68a869-1cbc-4544-a252-b253cb1f2aaf
   created_at           : 05/10/2020 03:22:50
-  created_by           : admin@domain.com
+  created_by           : `admin@domain.com`
   updated_at           : 05/10/2020 03:23:43
-  updated_by           : admin@domain.com
+  updated_by           : `admin@domain.com`
   category_uuid        : 6fbd0c51-4eea-4bed-8490-65c590ece437
   value                : Site A Virtual
   description          :
