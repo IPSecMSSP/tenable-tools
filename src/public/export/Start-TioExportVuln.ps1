@@ -1,9 +1,9 @@
-function Get-TioExportVulnStatus {
+function Start-TioExportVuln {
   <#
   .SYNOPSIS
-    Get the status of an in-progress Vuln export
+    Starts an export of all vulnerabilities that match the request criteria.
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Vulns
+    This function returns the UUID for the export task running in Tenable.io
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER ApiKeys
@@ -12,13 +12,13 @@ function Get-TioExportVulnStatus {
   .PARAMETER Method
     Valid HTTP Method to use: GET (Default), POST, DELETE, PUT
   .PARAMETER Filter
-    Specifies filters for exported Vulns. To return all Vulns, omit the filters object. If
+    Specifies filters for exported vulnerabilities. To return all vulnerabilities, omit the filters object. If
     your request specifies multiple filters, the system combines the filters using the AND search operator.
   .OUTPUTS
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ListAll')]
+  [CmdletBinding(DefaultParameterSetName = 'IncludeAll', SupportsShouldProcess)]
 
   param(
     [Parameter(Mandatory=$false,
@@ -38,12 +38,20 @@ function Get-TioExportVulnStatus {
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
     [ValidateSet("Post","Get","Put","Delete")]
-    [string] $Method = "GET",
+    [string] $Method = "POST",
+
+    [Parameter(Mandatory=$false,
+      HelpMessage = 'Assets per chunk')]
+    [int64] $ChunkSize = 1000,
+
+    [Parameter(Mandatory=$false,
+      HelpMessage = 'Include Unlicensed Assets')]
+    [switch] $IncludeUnlicensed,
 
     [Parameter(Mandatory=$true,
-      ParameterSetName = 'ById',
+      ParameterSetName = 'ByFilter',
       HelpMessage = 'Filter condition')]
-    [string] $Uuid
+    [psobject] $Filter
   )
 
   Begin {
@@ -51,20 +59,41 @@ function Get-TioExportVulnStatus {
 
     Write-Verbose $Me
 
-    $Uri.Path = [io.path]::combine($Uri.Path, "vulns/export", $uuid, "status")
+
+    $Uri.Path = [io.path]::combine($Uri.Path, "vulns/export")
+
+    # Starting a new search
+    $Body = @{}
+    $Body.Add('num_assets',$ChunkSize)
+
+    if ($PSBoundParameters.ContainsKey('TagCategory')) {
+      $Body.Add('filters',@{})
+      $Body.filters.add(('tag.' + $TagCategory),$TagValue)
+    } elseif ($PSBoundParameters.ContainsKey('Filter')) {
+      $Body.Add('filters',$Filter)
+    }
+
+    if ($PSBoundParameters.ContainsKey('IncludeUnlicensed')) {
+      # Include Unlicensed Assets in Vulnerability Export
+      $Body.Add('include_unlicensed','true')
+    }
 
   }
 
   Process {
-    # Get an updated Vuln export status
-    Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method
 
-    if ($ExportStatus.exports) {
-      Write-Output $ExportStatus.exports
-    } else {
-      Write-Output $ExportStatus
+    # Initiate the Vuln Export
+    Write-Verbose "$Me : Uri : $($Uri.Uri)"
+
+    if ($PSCmdlet.ShouldProcess($Uri, "Start Vulnerability Export Task")) {
+      $VulnExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
     }
+
+    $Uuid = $VulnExport.export_uuid
+
+    Write-Verbose ($Me + ': Vuln Export ID: ' + $Uuid)
+
+    Write-Output $Uuid
 
   }
 

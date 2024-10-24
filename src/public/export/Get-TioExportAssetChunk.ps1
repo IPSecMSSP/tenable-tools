@@ -65,7 +65,7 @@ function Get-TioExportAssetChunk {
   Process {
     # Initiate the Asset Export
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $ExportChunk = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
+    $ExportChunk = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method
 
     Write-Output $ExportChunk
 
