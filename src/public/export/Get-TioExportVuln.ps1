@@ -51,7 +51,7 @@ function Get-TioExportVuln {
     [Parameter(Mandatory=$true,
       ParameterSetName = 'ByFilter',
       HelpMessage = 'Filter condition')]
-    [string] $Filter,
+    [psobject] $Filter,
 
     [Parameter(Mandatory=$true,
       ParameterSetName = 'ByUuid',
@@ -93,9 +93,18 @@ function Get-TioExportVuln {
     if (!$PSBoundParameters.ContainsKey('Uuid')) {
       # Initiate the Vuln Export
       Write-Verbose "$Me : Uri : $($Uri.Uri)"
-      $VulnExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+      $ExportParams = @{
+        ApiKeys   = $ApiKeys
+        ChunkSize = $ChunkSize
+      }
 
-      $Uuid = $VulnExport.export_uuid
+      if ($PSBoundParameters.ContainsKey('Filter')) {
+        $ExportParams.Add('Filter', $Filter)
+      }
+
+      $VulnExport = Start-TioExportVuln @ExportParams
+
+      $Uuid = $VulnExport
     }
 
     Write-Verbose ($Me + ': Vuln Export ID: ' + $Uuid)
