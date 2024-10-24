@@ -87,7 +87,7 @@ function Invoke-TioApiRequest {
     if ($Body) {
       # Make the API Call, using the supplied Body. Contents of $Body are the responsibility of the calling code.
       Write-Verbose "$Me : Body supplied"
-      Write-Debug ("$Me : Body : " + ($Body | ConvertTo-Json -Depth 10 -Compress))
+      Write-Debug ("$Me : Body : " + ($Body | ConvertTo-Json -Depth 20 -Compress))
 
       try {
         $Results = Invoke-RestMethod -Method $Method -Uri $Uri.Uri -Headers $Header -Body ($Body|ConvertTo-Json -Depth 10) -ResponseHeadersVariable ResponseHeaders

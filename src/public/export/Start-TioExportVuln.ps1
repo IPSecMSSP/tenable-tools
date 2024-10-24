@@ -1,9 +1,9 @@
-function Get-TioExportVuln {
+function Start-TioExportVuln {
   <#
   .SYNOPSIS
-    Exports all vulnerabilities that match the request criteria.
+    Starts an export of all vulnerabilities that match the request criteria.
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Vulnerabilities
+    This function returns the UUID for the export task running in Tenable.io
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER ApiKeys
@@ -51,12 +51,7 @@ function Get-TioExportVuln {
     [Parameter(Mandatory=$true,
       ParameterSetName = 'ByFilter',
       HelpMessage = 'Filter condition')]
-    [psobject] $Filter,
-
-    [Parameter(Mandatory=$true,
-      ParameterSetName = 'ByUuid',
-      HelpMessage = 'Tag Value Filter condition')]
-    [string] $Uuid
+    [psobject] $Filter
   )
 
   Begin {
@@ -64,21 +59,18 @@ function Get-TioExportVuln {
 
     Write-Verbose $Me
 
-    $RetryInterval = 30
 
     $Uri.Path = [io.path]::combine($Uri.Path, "vulns/export")
 
-    if (!$PSBoundParameters.ContainsKey('Uuid')) {
-      # Starting a new search
-      $Body = @{}
-      $Body.Add('num_assets',$ChunkSize)
+    # Starting a new search
+    $Body = @{}
+    $Body.Add('num_assets',$ChunkSize)
 
-      if ($PSBoundParameters.ContainsKey('TagCategory')) {
-        $Body.Add('filters',@{})
-        $Body.filters.add(('tag.' + $TagCategory),$TagValue)
-      } elseif ($PSBoundParameters.ContainsKey('Filter')) {
-        $Body.Add('filters',$Filter)
-      }
+    if ($PSBoundParameters.ContainsKey('TagCategory')) {
+      $Body.Add('filters',@{})
+      $Body.filters.add(('tag.' + $TagCategory),$TagValue)
+    } elseif ($PSBoundParameters.ContainsKey('Filter')) {
+      $Body.Add('filters',$Filter)
     }
 
     if ($PSBoundParameters.ContainsKey('IncludeUnlicensed')) {
@@ -90,57 +82,15 @@ function Get-TioExportVuln {
 
   Process {
 
-    if (!$PSBoundParameters.ContainsKey('Uuid')) {
-      # Initiate the Vuln Export
-      Write-Verbose "$Me : Uri : $($Uri.Uri)"
-      $ExportParams = @{
-        ApiKeys   = $ApiKeys
-        ChunkSize = $ChunkSize
-      }
+    # Initiate the Vuln Export
+    Write-Verbose "$Me : Uri : $($Uri.Uri)"
+    $VulnExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
 
-      if ($PSBoundParameters.ContainsKey('Filter')) {
-        $ExportParams.Add('Filter', $Filter)
-      }
-
-      $VulnExport = Start-TioExportVuln @ExportParams
-
-      $Uuid = $VulnExport.export_uuid
-    }
+    $Uuid = $VulnExport.export_uuid
 
     Write-Verbose ($Me + ': Vuln Export ID: ' + $Uuid)
-    # Start by checking the status
-    $ExportStatus = Get-TioExportVulnStatus -ApiKeys $ApiKeys -Uuid $Uuid
 
-    if ($ExportStatus.Error) {
-      Write-Error ("$Me : Exception: $($ExportStatus.Code) : $($ExportStatus.Note)")
-    }
-
-    Write-Verbose ($Me + ': Vuln Export Status: ' +$ExportStatus.status)
-
-    # Wait until the export is finished
-    while ($ExportStatus.status -ne 'FINISHED') {
-      Start-Sleep -Seconds $RetryInterval
-
-      $ExportStatus = Get-TioExportVulnStatus -ApiKeys $ApiKeys -Uuid $Uuid
-
-      # Check for failures
-      if ($ExportStatus.status -eq 'CANCELLED' -or $ExportStatus.status -eq 'ERROR') {
-        Write-Error 'Vuln Export Failed'
-        exit 1
-      }
-
-      Write-Verbose ($Me + ': Vuln Export Status: ' + $ExportStatus.status)
-    }
-
-    # We should have our results available for download now
-
-    $Vulns = @()
-
-    foreach ($Chunk in $ExportStatus.chunks_available) {
-      $Vulns += Get-TioExportVulnChunk -ApiKeys $ApiKeys -Uuid $Uuid -Chunk $Chunk
-    }
-
-    Write-Output $Vulns
+    Write-Output $Uuid
 
   }
 

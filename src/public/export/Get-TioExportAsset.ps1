@@ -47,7 +47,7 @@ function Get-TioExportAsset {
     [Parameter(Mandatory=$true,
       ParameterSetName = 'ByFilter',
       HelpMessage = 'Filter condition')]
-    [string] $Filter,
+    [psobject] $Filter,
 
     [Parameter(Mandatory=$true,
       ParameterSetName = 'ByTag',
@@ -94,7 +94,21 @@ function Get-TioExportAsset {
     if (!$PSBoundParameters.ContainsKey('Uuid')) {
       # Initiate the Asset Export
       Write-Verbose "$Me : Uri : $($Uri.Uri)"
-      $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+      $ExportParams = @{
+        ApiKeys = $ApiKeys
+        ChunkSize = $ChunkSize
+      }
+
+      if ($PSBoundParameters.ContainsKey('Filter')) {
+        $ExportParams.Add('Filter', $Filter)
+      }
+
+      if ($PSBoundParameters.ContainsKey('TagCategory')) {
+        $ExportParams.Add('TagCategory', $TagCategory)
+        $ExportParams.Add('TagValue', $TagValue)
+      }
+
+      $AssetExport = Start-TioExportAsset @ExportParams
 
       $Uuid = $AssetExport.export_uuid
     }

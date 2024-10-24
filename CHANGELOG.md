@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] - 2024-10-15
+
+### Added
+
+- Start-TioExportAsset
+- Start-TioExportVuln
+
+### Changed
+
+- Get-TioExportAsset uses Start-TioExportAsset to initiate export task
+- Get-TioExportVuln uses Start-TioExportVuln to initiate export task
+- Increase debug json converstion depth in Invoke-TioApiRequest from 10 to 20
+
+### Fixed
+
+- Filter parameter on Get-TioExportAsset was a [string], is now a [psobject]
+- Filter parameter on Get-TioExportVuln was a [string], is now a [psobject]
+- Removed incorrect Filter parameter from Get-TioAssetExportStatus call to Invoke-TioApiRequest
+
 ## [1.2.0] - 2024-10-15
 
 ### Added

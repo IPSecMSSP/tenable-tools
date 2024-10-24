@@ -1,9 +1,9 @@
-function Get-TioExportAssetStatus {
+function Start-TioExportAsset {
   <#
   .SYNOPSIS
-    Get the status of an in-progress asset export
+    Starts an asynchronous export of all assets that match the request criteria.
   .DESCRIPTION
-    This function returns information about one or more Tenable.io Assets
+    This function returns the UUID of the export job that is executing in the Tenable.io environment
   .PARAMETER Uri
     Base API URL for the API Call
   .PARAMETER ApiKeys
@@ -18,7 +18,7 @@ function Get-TioExportAssetStatus {
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ListAll')]
+  [CmdletBinding(DefaultParameterSetName='ByTag')]
 
   param(
     [Parameter(Mandatory=$false,
@@ -38,12 +38,26 @@ function Get-TioExportAssetStatus {
     [Parameter(Mandatory=$false,
       HelpMessage = 'Method to use when making the request. Defaults to GET')]
     [ValidateSet("Post","Get","Put","Delete")]
-    [string] $Method = "GET",
+    [string] $Method = "POST",
+
+    [Parameter(Mandatory = $false,
+      HelpMessage = 'Results per chunk')]
+    [int64] $ChunkSize = 1000,
 
     [Parameter(Mandatory=$true,
-      ParameterSetName = 'ById',
+      ParameterSetName = 'ByFilter',
       HelpMessage = 'Filter condition')]
-    [string] $Uuid
+    [PSObject] $Filter,
+
+    [Parameter(Mandatory=$true,
+      ParameterSetName = 'ByTag',
+      HelpMessage = 'Tag Category Filter condition')]
+    [string] $TagCategory,
+
+    [Parameter(Mandatory=$true,
+      ParameterSetName = 'ByTag',
+      HelpMessage = 'Tag Value Filter condition')]
+    [string] $TagValue
   )
 
   Begin {
@@ -51,20 +65,34 @@ function Get-TioExportAssetStatus {
 
     Write-Verbose $Me
 
-    $Uri.Path = [io.path]::combine($Uri.Path, "assets/export", $uuid, "status")
+    $Uri.Path = [io.path]::combine($Uri.Path, "assets/export")
 
+    # Starting a new search
+    $Body = @{}
+    $Body.Add('chunk_size',$ChunkSize)
+
+    if ($PSBoundParameters.ContainsKey('TagCategory')) {
+      $Body.Add('filters',@{})
+      $Body.filters.add(('tag.' + $TagCategory),$TagValue)
+    } elseif ($PSBoundParameters.ContainsKey('Filter')) {
+      $Body.Add('filters',$Filter)
+    }
+
+    Write-Debug ('{0}: Filters: {1}' -f $Me, ($Filter | ConvertTo-Json -Compress))
   }
 
   Process {
-    # Get an updated asset export status
-    Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method
 
-    if ($ExportStatus.exports) {
-      Write-Output $ExportStatus.exports
-    } else {
-      Write-Output $ExportStatus
-    }
+    # Initiate the Asset Export
+    Write-Verbose "$Me : Uri : $($Uri.Uri)"
+    Write-Debug ('{0}: Body: {1}' -f $Me, ($Body | ConvertTo-Json -Depth 10 -Compress))
+    $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+
+    $Uuid = $AssetExport.export_uuid
+
+    Write-Verbose ($Me + ': Asset Export ID: ' + $Uuid)
+
+    Write-Output $Uuid
 
   }
 
