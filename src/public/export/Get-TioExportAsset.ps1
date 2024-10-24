@@ -110,7 +110,9 @@ function Get-TioExportAsset {
 
       $AssetExport = Start-TioExportAsset @ExportParams
 
-      $Uuid = $AssetExport.export_uuid
+      Write-Verbose ('{0}: AssetExport: {1}' -f $Me, ($AssetExport | ConvertTo-Json -depth 10 -Compress))
+
+      $Uuid = $AssetExport
     }
 
     Write-Verbose ($Me + ': Asset Export ID: ' + $Uuid)

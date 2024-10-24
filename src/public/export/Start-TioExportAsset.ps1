@@ -18,7 +18,7 @@ function Start-TioExportAsset {
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='ByTag')]
+  [CmdletBinding(DefaultParameterSetName = 'ByTag', SupportsShouldProcess)]
 
   param(
     [Parameter(Mandatory=$false,
@@ -86,7 +86,10 @@ function Start-TioExportAsset {
     # Initiate the Asset Export
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
     Write-Debug ('{0}: Body: {1}' -f $Me, ($Body | ConvertTo-Json -Depth 10 -Compress))
-    $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+
+    if ($PSCmdlet.ShouldProcess("$Uri", "Start Asset Export Task")) {
+      $AssetExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+    }
 
     $Uuid = $AssetExport.export_uuid
 

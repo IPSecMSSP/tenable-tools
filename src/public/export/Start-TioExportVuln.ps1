@@ -18,7 +18,7 @@ function Start-TioExportVuln {
     PSCustomObject containing results if successful.  May be $null if no data is returned
     ErrorObject containing details of error if one is encountered.
   #>
-  [CmdletBinding(DefaultParameterSetName='IncludeAll')]
+  [CmdletBinding(DefaultParameterSetName = 'IncludeAll', SupportsShouldProcess)]
 
   param(
     [Parameter(Mandatory=$false,
@@ -84,7 +84,10 @@ function Start-TioExportVuln {
 
     # Initiate the Vuln Export
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $VulnExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+
+    if ($PSCmdlet.ShouldProcess($Uri, "Start Vulnerability Export Task")) {
+      $VulnExport = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Body
+    }
 
     $Uuid = $VulnExport.export_uuid
 

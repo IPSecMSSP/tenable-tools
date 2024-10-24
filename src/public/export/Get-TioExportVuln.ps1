@@ -104,7 +104,7 @@ function Get-TioExportVuln {
 
       $VulnExport = Start-TioExportVuln @ExportParams
 
-      $Uuid = $VulnExport.export_uuid
+      $Uuid = $VulnExport
     }
 
     Write-Verbose ($Me + ': Vuln Export ID: ' + $Uuid)

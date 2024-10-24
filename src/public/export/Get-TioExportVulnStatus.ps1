@@ -58,7 +58,7 @@ function Get-TioExportVulnStatus {
   Process {
     # Get an updated Vuln export status
     Write-Verbose "$Me : Uri : $($Uri.Uri)"
-    $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method -Body $Filter
+    $ExportStatus = Invoke-TioApiRequest -Uri $Uri -ApiKeys $ApiKeys -Method $Method
 
     if ($ExportStatus.exports) {
       Write-Output $ExportStatus.exports
